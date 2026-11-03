@@ -16,10 +16,10 @@ const SLIDES = [
 ]
 
 const JOURNEY = [
-  { title: 'Apply', sub: 'Open call', ic: 'user', bg: '#6d4aff', img: '/img/kids-robot.jpg', credit: 'Photo: Virginia Department of Education, CC BY 2.0', text: 'Ages 13 to 16, any school in Amman. A 10-minute form, no grades asked. Then a fun Key Trial.' },
-  { title: 'The Locked Box', sub: 'Week 0 · Handover', ic: 'box', bg: '#0f9d58', img: '/img/brainstorm.jpg', credit: 'Photo: Nathan Kit Kennedy, CC0', text: 'A real company hands your team of five a sealed box with a real problem inside.' },
-  { title: 'Six Keys', sub: 'Weeks 1 to 7 · Training', ic: 'key', bg: '#ce1126', img: '/img/teens-build.jpg', credit: 'Photo: Project manas, CC BY-SA 4.0', text: 'Train in robotics, AI and business. Pass each stage\'s challenge to earn its key.' },
-  { title: 'The Vault', sub: 'Week 8 · Pitch night', ic: 'vault', bg: '#f08c00', img: '/img/pitch.jpg', credit: 'Photo: Rick Naystatt, Public domain', text: 'Pitch to the leaders who hold the keys. Three golden keys open the vault on stage.' },
+  { title: 'Apply', sub: 'Open call', ic: 'user', bg: '#6d4aff', img: '/img/hands.jpg', text: 'Ages 13 to 16, any school in Amman. A 10-minute form, no grades asked. Then a fun Key Trial.' },
+  { title: 'The Locked Box', sub: 'Week 0 · Handover', ic: 'box', bg: '#0f9d58', img: '/img/slate.jpg', text: 'A real company hands your team of five a sealed box with a real problem inside.' },
+  { title: 'Six Keys', sub: 'Weeks 1 to 7 · Training', ic: 'key', bg: '#ce1126', img: '/img/keys.jpg', text: 'Train in robotics, AI and business. Pass each stage\'s challenge to earn its key.' },
+  { title: 'The Vault', sub: 'Week 8 · Pitch night', ic: 'vault', bg: '#f08c00', img: '/img/stage.jpg', text: 'Pitch to the leaders who hold the keys. Three golden keys open the vault on stage.' },
 ]
 
 const SECTOR_ICONS = ['phone', 'truck', 'food', 'bank']
