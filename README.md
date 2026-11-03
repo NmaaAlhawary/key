@@ -17,3 +17,8 @@ Admin: http://localhost:5208/admin. First login is in `server/data/FIRST-LOGIN.t
 - `server/`: Express + SQLite (`server/data/keys.db`), uploads in `server/data/uploads` (admin-only)
 - `npm run seed:demo` adds DEMO applicants; delete them in Admin → Settings
 - Photos: replace files in `public/img` with real season photos (same names)
+
+## Publish
+    npm run deploy       # builds the public site and pushes it to https://nmaaalhawary.github.io/key/
+
+The GitHub Pages version has no server: forms show "opens 1 March 2027" and the admin is off. Host `server/` (e.g. Render) before the open call to take applications online.
