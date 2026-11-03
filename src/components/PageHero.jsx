@@ -1,24 +1,19 @@
 import { asset } from '../asset.js'
 
-// Linen page header: title on the left, an optional framed photo postcard on the right, a stitch line below.
-export default function PageHero({ img, title, text, side, credit, label }) {
+// Page header: full-bleed photo, a glass caption box bottom-left, optional pill on the right, then a stitch line.
+export default function PageHero({ img, title, text, side, credit }) {
   return (
-    <section className="phero2">
-      <div className="wrap phero2-in">
-        <div className="phero2-text">
-          {label && <div className="label red">{label}</div>}
+    <>
+      <section className={`phero ${img ? '' : 'art'}`}>
+        {img && <img src={asset(img)} alt="" />}
+        <div className="hero-box">
           <h1>{title}</h1>
           {text && <p>{text}</p>}
-          {side && <div className="phero2-side">{side}</div>}
         </div>
-        {img && (
-          <figure className="postcard tilt">
-            <img src={asset(img)} alt="" />
-            {credit && <figcaption>{credit}</figcaption>}
-          </figure>
-        )}
-      </div>
-      <div className="stitch-line" />
-    </section>
+        {side && <div className="hero-side">{side}</div>}
+        {credit && <small className="credit">{credit}</small>}
+      </section>
+      <div className="stitch-band"><div className="stitch-line" /></div>
+    </>
   )
 }

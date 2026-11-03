@@ -9,10 +9,10 @@ import { PROBLEMS } from '../content.js'
 import { api } from '../api.js'
 import { countUp } from '../useReveal.js'
 
-const CARDS = [
-  { img: '/img/stage.jpg', title: 'Vault night · late May' },
-  { img: '/img/petra.jpg', title: 'Inspired by Al-Khazneh, Petra', credit: 'Photo: Brian Jeffery Beggerly, CC BY 2.0' },
-  { img: '/img/amman.jpg', title: 'Season one · Amman', credit: 'Photo: Bernard Gagnon, CC BY-SA 4.0' },
+const SLIDES = [
+  { img: '/img/stage.jpg', pos: 'center 45%' },
+  { img: '/img/petra.jpg', pos: 'center 40%', credit: 'Al-Khazneh, Petra · Photo: Brian Jeffery Beggerly, CC BY 2.0' },
+  { img: '/img/amman.jpg', pos: 'center 55%', credit: 'Amman · Photo: Bernard Gagnon, CC BY-SA 4.0' },
 ]
 
 const JOURNEY = [
@@ -36,40 +36,31 @@ function LogoTile({ p, label, light }) {
 export default function Home() {
   const s = useSettings()
   const [partners, setPartners] = useState([])
+  const [i, setI] = useState(0)
+  useEffect(() => { const t = setInterval(() => setI(x => (x + 1) % SLIDES.length), 6000); return () => clearInterval(t) }, [])
+  const go = d => setI(x => (x + d + SLIDES.length) % SLIDES.length)
   useEffect(() => { api('/api/public/partners').then(setPartners).catch(() => {}); countUp() }, [])
   return (
     <>
-      <section className="hero2">
-        <div className="wrap hero2-in">
-          <div className="hero2-text">
-            <div className="label red">{s.season_label} · Ages 13 to 16</div>
-            <h1>Every company is a <em>locked door.</em></h1>
-            <p>An eight-week innovation season where teams of five students crack a real problem from a real company, earn six keys, and pitch at the Vault.</p>
-            <div className="hero2-actions">
-              <Link to="/apply" className="btn btn-ink arrow">{s.apps_open ? 'Apply now' : 'Applications open 1 March'}</Link>
-              <Link to="/partners" className="btn btn-ghost">Bring a problem</Link>
-            </div>
-            <div className="hero2-meta">
-              <div><b>{s.call_dates}</b><span>Applications</span></div>
-              <div><b>Apr to May 2027</b><span>Six keys</span></div>
-              <div><b>Late May</b><span>Vault night</span></div>
-            </div>
-          </div>
-          <div className="hero2-key" aria-hidden="true">
-            <div className="hero2-ring" />
-            <img src={asset('/img/key-red.svg')} alt="" />
-          </div>
+      <section className="hero">
+        <div className="slides" style={{ position: 'absolute', inset: 0 }}>
+          {SLIDES.map((sl, k) => <div key={k} className={`slide ${k === i ? 'on' : ''}`}><img src={asset(sl.img)} alt="" style={{ objectPosition: sl.pos }} /></div>)}
         </div>
-        <div className="wrap postcards">
-          {CARDS.map((c, k) => (
-            <figure className="postcard" key={c.img} style={{ '--r': `${[-2.2, 1.4, -1][k]}deg` }}>
-              <img src={asset(c.img)} alt="" loading="lazy" />
-              <figcaption><b>{c.title}</b>{c.credit && <small>{c.credit}</small>}</figcaption>
-            </figure>
-          ))}
+        <button className="hero-arrow l" aria-label="Previous slide" onClick={() => go(-1)}>‹</button>
+        <button className="hero-arrow r" aria-label="Next slide" onClick={() => go(1)}>›</button>
+        <div className="hero-box" key={`box-${i}`}>
+          <div className="label red" style={{ marginBottom: 10 }}>{s.season_label}</div>
+          <h1>Every company is a locked door.<br />Join KEYS!</h1>
+          <p>An eight-week innovation season where teams of students crack a real problem from a real company, earn six keys, and pitch at the Vault.</p>
         </div>
-        <div className="stitch-line" />
+        <div className="hero-side">
+          <div className="date-pill">{s.apps_open ? `Apply ${s.call_dates.replace(' 2027', '')}` : `Opens ${s.call_dates.split(' to ')[0]} March`}</div>
+          <Link to="/apply" className="btn btn-red arrow" style={{ border: '1.5px solid rgba(255,255,255,.6)' }}>{s.apps_open ? 'Apply now' : 'Get ready'}</Link>
+        </div>
+        {SLIDES[i].credit && <small className="credit">{SLIDES[i].credit}</small>}
+        <div className="dots-row">{SLIDES.map((_, k) => <button key={k} aria-label={`Slide ${k + 1}`} className={k === i ? 'on' : ''} onClick={() => setI(k)} />)}</div>
       </section>
+      <div className="stitch-band"><div className="stitch-line" /></div>
 
       <section className="sec">
         <div className="pattern-corner" />

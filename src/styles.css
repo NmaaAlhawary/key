@@ -706,3 +706,5 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .tm-empty { text-align: center; padding: 18px 6px; color: var(--ok); }
 .tm-empty p { color: var(--muted); margin: 8px 0 14px; font-size: 14px; }
 @media (max-width: 1200px) { .tm-layout { grid-template-columns: 1fr; } .tm-pool { position: static; } }
+.nav-theme-m { display: none; }
+@media (max-width: 1060px) { .nav-in > .theme-btn:not(.nav-theme-m) { display: none; } .nav-theme-m { display: grid; margin-left: auto; } .nav-burger { margin-left: 4px; } }

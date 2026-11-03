@@ -4,7 +4,6 @@ import Logo from './Logo.jsx'
 export default function Footer() {
   return (
     <footer className="footer">
-      <div className="wrap footer-big" aria-hidden="true">KEYS</div>
       <div className="wrap footer-top">
         <Link to="/" aria-label="KEYS home"><Logo height={16} color="#fff" small /></Link>
         <nav className="footer-links">
