@@ -25,7 +25,7 @@ export default function Nav() {
   return (
     <header className={`nav ${solid || open ? 'solid' : ''}`}>
       <div className="wrap nav-in">
-        <Link to="/" aria-label="KEYS home"><Logo height={18} color="#fff" small /></Link>
+        <Link to="/" aria-label="KEYS home"><Logo height={18} color="#16140f" small /></Link>
         <nav className="nav-links">{LINKS.map(([to, l]) => <NavLink key={to} to={to}>{l}</NavLink>)}</nav>
         <div className="nav-cta">
           <Link className="btn btn-line btn-sm" to="/contact">Contact us</Link>
