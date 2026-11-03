@@ -36,7 +36,7 @@ export default function HowItWorks() {
         <section key={r.title} className={`row ${i % 2 === 0 ? 'redbg' : 'flip'}`} style={{ color: '#fff' }}>
           <div className="wrap row-in">
             <div className={`row-media ${r.img ? '' : 'art'}`}>
-              {r.img ? <img src={asset(r.img)} alt="" loading="lazy" />
+              {r.img ? <><img src={asset(r.img)} alt="" loading="lazy" />{r.credit && <small className="img-credit">{r.credit}</small>}</>
                 : r.art === 'keys' ? (
                   <div className="art-keys">{[1, 2, 3, 4, 5, 6].map(n => <div key={n}><span>0{n}</span><StitchKey teeth={n} size={190} color="#fff" dim="rgba(255,255,255,.1)" /></div>)}</div>
                 ) : r.art === 'roles' ? (
@@ -72,12 +72,16 @@ export default function HowItWorks() {
               </article>
             ))}
           </div>
-          <div className="rhythm" aria-label="Every session, the same rhythm">
-            {[['15', 'Warm-up', 15, 'spark'], ['30', 'Learn', 30, 'chat'], ['75', 'Build', 75, 'tool'], ['15', 'Break', 15, 'clock'], ['15', 'Share', 15, 'mic']].map(([m, l, f, ic]) => (
-              <div key={l} style={{ flex: f }}><Icon name={ic} size={16} /><span><b>{m}′</b>{l}</span></div>
-            ))}
+          <div className="rhythm2">
+            <div className="rhythm2-head"><b>Every session, the same rhythm</b><span className="label">2 h 30 min · twice a week</span></div>
+            <div className="rhythm2-track">
+              {[['15', 'Warm-up'], ['30', 'Learn'], ['75', 'Build'], ['15', 'Break'], ['15', 'Share']].map(([m, l], k) => (
+                <div key={l} className={`rseg ${l === 'Build' ? 'main' : ''}`} style={{ flex: Number(m), '--d': `${k * 0.15}s` }}>
+                  <i /><span><b>{m}′</b>{l}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <p className="label" style={{ marginTop: 10 }}>Every session, the same rhythm · minutes</p>
           <div className="center" style={{ marginTop: 48 }}><Link to="/application" className="btn btn-red arrow">How to apply</Link></div>
         </div>
       </section>

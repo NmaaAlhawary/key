@@ -14,7 +14,7 @@ export default function KeyBlade() {
         <div className="blade-bar" />
         <div className="blade-teeth">
           {KEYS.map((k, i) => (
-            <div className="tooth" key={k.n} style={{ '--h': `${34 + i * 16}px`, '--d': `${0.15 + i * 0.12}s` }}>
+            <div className="tooth" key={k.n} style={{ '--h': `${(i + 2) * 14}px`, '--d': `${0.15 + i * 0.12}s` }}>
               <i />
               <span className="tooth-n">{k.n}</span>
               <b>{k.name.replace(' key', '')}</b>

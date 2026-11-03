@@ -28,12 +28,12 @@ export default function Nav({ light, onToggle }) {
       <div className="wrap nav-in">
         <Link to="/" aria-label="KEYS home"><Logo height={18} color={light ? '#16140f' : '#fff'} small /></Link>
         <nav className="nav-links">{LINKS.map(([to, l]) => <NavLink key={to} to={to}>{l}</NavLink>)}</nav>
-        <button className="theme-btn" onClick={onToggle} aria-label={light ? 'Switch to dark theme' : 'Switch to light theme'} title={light ? 'Dark theme' : 'Light theme'}>
-          <Icon name={light ? 'moon' : 'sun'} size={18} weight="bold" />
-        </button>
         <div className="nav-cta">
           <Link className="btn btn-line btn-sm" to="/contact">Contact us</Link>
           <Link className="btn btn-red btn-sm" to="/apply">Apply now</Link>
+          <button className="theme-btn" onClick={onToggle} aria-label={light ? 'Switch to dark theme' : 'Switch to light theme'} title={light ? 'Dark theme' : 'Light theme'}>
+            <Icon name={light ? 'moon' : 'sun'} size={22} weight="bold" />
+          </button>
         </div>
         <button className="theme-btn nav-theme-m" onClick={onToggle} aria-label="Switch theme"><Icon name={light ? 'moon' : 'sun'} size={18} weight="bold" /></button>
         <button className="nav-burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}>

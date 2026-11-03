@@ -13,7 +13,6 @@ export default function PageHero({ img, title, text, side, credit }) {
         {side && <div className="hero-side">{side}</div>}
         {credit && <small className="credit">{credit}</small>}
       </section>
-      <div className="stitch-band"><div className="stitch-line" /></div>
     </>
   )
 }

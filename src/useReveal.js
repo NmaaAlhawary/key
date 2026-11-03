@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 const SEL = [
   '.sec .h2', '.lead', '.split > *', '.tiles > *', '.jcard', '.gcard', '.kcard', '.ccard', '.rcard', '.ctabox',
   '.datecard', '.row-media', '.row-in > div:not(.row-media)', '.band-in', '.org .wrap > *', '.faq details',
-  '.ptable', '.give > div', '.blade', '.postcards .postcard', '.free', '.stats > div', '.apply-side', '.apply-card', '.dform', '.subhead', '.rhythm', '.jfoot',
+  '.ptable', '.give > div', '.blade', '.postcards .postcard', '.free', '.stats > div', '.apply-side', '.apply-card', '.dform', '.subhead', '.rhythm', '.rhythm2', '.jfoot',
 ].join(',')
 
 export function useReveal() {
