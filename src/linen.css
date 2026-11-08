@@ -1,11 +1,11 @@
 /* KEYS linen theme: warm woven background, ink type, gold tatreez stitching.
    Scoped to .site so the admin keeps its own look. */
 .site.light {
-  --red: #a97a1e; --red-hi: #c09030; --red-soft: #8a6416; --red-deep: #3a2b0c;
+  --red: #987338; --red-hi: #b38c4b; --red-soft: #8a6416; --red-deep: #3a2b0c;
   --linen: #f4efe6; --linen2: #ebe3d4; --linen3: #e2d8c5; --paper2: #fbf8f2;
   --ink: #16140f; --ink-2: #2b2720; --soft: #6b645a; --hair: #d9cfbd;
   --serif: 'Fraunces', Georgia, serif;
-  --stitch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M7 0l4 4-4 4-4-4z' fill='%23d6ac45'/%3E%3C/svg%3E");
+  --stitch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M7 0l4 4-4 4-4-4z' fill='%23d9b46a'/%3E%3C/svg%3E");
   background: var(--linen) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 0h6v1H0zM0 3h6v.5H0z' fill='%2316140f' fill-opacity='.025'/%3E%3C/svg%3E");
   color: var(--ink);
 }
@@ -85,14 +85,14 @@
 .site.light .opt b { color: var(--ink); } .site .opt span { color: var(--soft); }
 .site.light .tell div { background: #fff; color: var(--ink-2); border: 1px solid var(--hair); }
 .site.light .glow-sec { background: var(--linen2); }
-.site.light .gcard:hover, .site.light .ccard:hover, .site.light .rcard:hover, .site.light .jcard:hover { border-color: var(--red); box-shadow: 0 18px 40px -26px rgba(214,172,69,.5); }
+.site.light .gcard:hover, .site.light .ccard:hover, .site.light .rcard:hover, .site.light .jcard:hover { border-color: var(--red); box-shadow: 0 18px 40px -26px rgba(217,180,106,.5); }
 
 /* six key cards */
 .site.light .kcard { background: var(--paper2); }
 .site.light .kcard::before { background: var(--stitch) left center / 14px 8px repeat-x; height: 8px; top: 10px; left: 26px; right: 26px; opacity: .8; }
 .site.light .kcard h3 { font-family: var(--serif); font-weight: 600; color: var(--ink); }
 .site.light .kcard-num { color: rgba(22,20,15,.05); font-family: var(--serif); }
-.site.light .kcard:hover .kcard-num { color: rgba(214,172,69,.12); }
+.site.light .kcard:hover .kcard-num { color: rgba(217,180,106,.12); }
 .site.light .kcard .challenge { background: #fff; border-color: var(--hair); color: var(--ink-2); }
 .site.light .kcard .challenge b { color: var(--red); }
 .site.light .kcard-ic { color: var(--red); filter: none; }
@@ -127,8 +127,8 @@
 .site.light .band { color: var(--linen); }
 .site.light .band::before { background: linear-gradient(90deg, rgba(22,20,15,.94) 0%, rgba(22,20,15,.75) 50%, rgba(22,20,15,.2) 100%); }
 .site.light .band .h2 { color: var(--linen); }
-.site.light .band .label.red { color: #f0cf72; }
-.site.light .stats b { font-family: var(--serif); color: #f0cf72; }
+.site.light .band .label.red { color: #ecd29a; }
+.site.light .stats b { font-family: var(--serif); color: #ecd29a; }
 .site.light .org::before { background: rgba(244,239,230,.9); }
 .site.light .org .h2 { color: var(--ink); }
 .site.light .org-box { background: var(--paper2); border: 1px solid var(--hair); border-radius: 4px; }
@@ -179,13 +179,13 @@
 .site.light .form-sec .btn-ink { background: var(--ink); color: var(--linen); }
 .site.light .form-sec .btn-ghost { color: var(--ink); border-color: var(--ink); }
 .site.light .credit { color: var(--soft); }
-.static-note { padding: 18px 20px; border-radius: 10px; background: rgba(214,172,69,.08); border: 1px solid rgba(214,172,69,.3); color: inherit; }
+.static-note { padding: 18px 20px; border-radius: 10px; background: rgba(217,180,106,.08); border: 1px solid rgba(217,180,106,.3); color: inherit; }
 .static-note b { color: var(--red); }
 .site.light .pattern-corner { display: none; }
 
 /* ---- shared by both themes: stitch line + stitched key blade ---- */
-.site { --stitch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M7 0l4 4-4 4-4-4z' fill='%23d6ac45'/%3E%3C/svg%3E");
-  --dia: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7 1.5l5.5 5.5L7 12.5 1.5 7z' fill='%23d6ac45'/%3E%3C/svg%3E");
+.site { --stitch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M7 0l4 4-4 4-4-4z' fill='%23d9b46a'/%3E%3C/svg%3E");
+  --dia: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7 1.5l5.5 5.5L7 12.5 1.5 7z' fill='%23d9b46a'/%3E%3C/svg%3E");
   --serif: 'Fraunces', Georgia, serif; }
 .stitch-band { padding: 26px 0 0; }
 .stitch-line { height: 8px; background: var(--stitch) center / 14px 8px repeat-x; margin: 0 auto; max-width: var(--wrap); }
@@ -270,6 +270,6 @@
 .site.light .row-media .img-credit { right: 16px; bottom: 14px; }
 
 /* Golden key: brighter gold on dark, deeper gold on linen so it keeps contrast */
-.site { --gold: #d6ac45; }
-.site.light { --gold: #a97a1e;
-  --dia: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7 1.5l5.5 5.5L7 12.5 1.5 7z' fill='%23a97a1e'/%3E%3C/svg%3E"); }
+.site { --gold: #d9b46a; }
+.site.light { --gold: #987338;
+  --dia: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7 1.5l5.5 5.5L7 12.5 1.5 7z' fill='%23987338'/%3E%3C/svg%3E"); }

@@ -38,7 +38,7 @@ export default function HowItWorks() {
             <div className={`row-media ${r.img ? '' : 'art'}`}>
               {r.img ? <><img src={asset(r.img)} alt="" loading="lazy" />{r.credit && <small className="img-credit">{r.credit}</small>}</>
                 : r.art === 'keys' ? (
-                  <div className="art-keys">{[1, 2, 3, 4, 5, 6].map(n => <div key={n}><span>0{n}</span><StitchKey teeth={n} size={190} color="var(--gold, #d6ac45)" dim="rgba(255,255,255,.1)" /></div>)}</div>
+                  <div className="art-keys">{[1, 2, 3, 4, 5, 6].map(n => <div key={n}><span>0{n}</span><StitchKey teeth={n} size={190} color="var(--gold, #d9b46a)" dim="rgba(255,255,255,.1)" /></div>)}</div>
                 ) : r.art === 'roles' ? (
                   <div className="art-roles">{ROLES.map(x => <div key={x.key}><span className="art-av">{x.short}</span><b>{x.label}</b></div>)}</div>
                 ) : <span className="art-ring"><Icon name={r.icon} size={84} color="#fff" /></span>}
