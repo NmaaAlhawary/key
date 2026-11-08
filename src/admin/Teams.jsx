@@ -8,7 +8,7 @@ import Icon from '../components/Icon.jsx'
 const initials = m => `${m.first_name[0] || ''}${m.last_name[0] || ''}`.toUpperCase()
 const roleOf = m => ROLES.find(r => r.key === (m.final_role || m.trial_role || m.self_role))
 const SECTOR_ICON = { Telecom: 'phone', Logistics: 'truck', Hospitality: 'food', Banking: 'bank' }
-const SECTOR_TINT = ['#ce1126', '#1f6feb', '#0f9d58', '#f08c00']
+const SECTOR_TINT = ['#d6ac45', '#1f6feb', '#0f9d58', '#f08c00']
 
 // Suggests a placement that follows the five team rules as far as the pool allows:
 // strongest scores first, each into the team that needs them most.

@@ -12,7 +12,7 @@ export default function Parents() {
       <section className="sec">
         <div className="wrap split">
           <div className="free">
-            <div className="label" style={{ color: '#ffd6da' }}>A season seat</div>
+            <div className="label" style={{ color: '#f6e7bf' }}>A season seat</div>
             <b>{s.seat_price}</b>
             <p>16 sessions, kits, six smart keys, a Door Visit, a filmed pitch and family seats at Vault night.</p>
             <p style={{ marginTop: 14 }}><b style={{ fontSize: 16, display: 'inline', margin: 0 }}>10% off</b> for early bird and siblings · <b style={{ fontSize: 16, display: 'inline', margin: 0 }}>Scholarship seats</b> funded by partners</p>

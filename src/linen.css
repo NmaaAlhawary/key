@@ -1,10 +1,11 @@
-/* KEYS linen theme: warm woven background, ink type, red tatreez stitching.
+/* KEYS linen theme: warm woven background, ink type, gold tatreez stitching.
    Scoped to .site so the admin keeps its own look. */
 .site.light {
+  --red: #a97a1e; --red-hi: #c09030; --red-soft: #8a6416; --red-deep: #3a2b0c;
   --linen: #f4efe6; --linen2: #ebe3d4; --linen3: #e2d8c5; --paper2: #fbf8f2;
   --ink: #16140f; --ink-2: #2b2720; --soft: #6b645a; --hair: #d9cfbd;
   --serif: 'Fraunces', Georgia, serif;
-  --stitch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M7 0l4 4-4 4-4-4z' fill='%23ce1126'/%3E%3C/svg%3E");
+  --stitch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M7 0l4 4-4 4-4-4z' fill='%23d6ac45'/%3E%3C/svg%3E");
   background: var(--linen) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 0h6v1H0zM0 3h6v.5H0z' fill='%2316140f' fill-opacity='.025'/%3E%3C/svg%3E");
   color: var(--ink);
 }
@@ -23,7 +24,7 @@
 .site.light .btn-ink:hover { background: #000; }
 .site.light .btn-ghost { border-color: var(--ink); color: var(--ink); }
 .site.light .btn-line { border-color: var(--ink); color: var(--ink); }
-.site.light .btn-red { background: var(--red); color: #fff; }
+.site.light .btn-red { background: var(--red); color: #120d02; }
 
 /* nav */
 .site.light .nav { color: var(--ink); background: rgba(244,239,230,.82); border-bottom: 1px solid var(--hair); }
@@ -34,8 +35,8 @@
 .site.light .nav-mobile.open { background: var(--linen); }
 .site.light .nav-mobile a { border-color: var(--hair); }
 .site.light .nav .btn-line { border: 0; padding-left: 6px; padding-right: 6px; }
-.site.light .nav .btn-red { background: var(--ink); }
-.site.light .nav .btn-red:hover { background: var(--red); }
+.site.light .nav .btn-red { background: var(--ink); color: #fbf6ea; }
+.site.light .nav .btn-red:hover { background: var(--red); color: #120d02; }
 
 /* split */
 .site.light .split p { color: var(--ink-2); }
@@ -84,14 +85,14 @@
 .site.light .opt b { color: var(--ink); } .site .opt span { color: var(--soft); }
 .site.light .tell div { background: #fff; color: var(--ink-2); border: 1px solid var(--hair); }
 .site.light .glow-sec { background: var(--linen2); }
-.site.light .gcard:hover, .site.light .ccard:hover, .site.light .rcard:hover, .site.light .jcard:hover { border-color: var(--red); box-shadow: 0 18px 40px -26px rgba(206,17,38,.5); }
+.site.light .gcard:hover, .site.light .ccard:hover, .site.light .rcard:hover, .site.light .jcard:hover { border-color: var(--red); box-shadow: 0 18px 40px -26px rgba(214,172,69,.5); }
 
 /* six key cards */
 .site.light .kcard { background: var(--paper2); }
 .site.light .kcard::before { background: var(--stitch) left center / 14px 8px repeat-x; height: 8px; top: 10px; left: 26px; right: 26px; opacity: .8; }
 .site.light .kcard h3 { font-family: var(--serif); font-weight: 600; color: var(--ink); }
 .site.light .kcard-num { color: rgba(22,20,15,.05); font-family: var(--serif); }
-.site.light .kcard:hover .kcard-num { color: rgba(206,17,38,.12); }
+.site.light .kcard:hover .kcard-num { color: rgba(214,172,69,.12); }
 .site.light .kcard .challenge { background: #fff; border-color: var(--hair); color: var(--ink-2); }
 .site.light .kcard .challenge b { color: var(--red); }
 .site.light .kcard-ic { color: var(--red); filter: none; }
@@ -126,8 +127,8 @@
 .site.light .band { color: var(--linen); }
 .site.light .band::before { background: linear-gradient(90deg, rgba(22,20,15,.94) 0%, rgba(22,20,15,.75) 50%, rgba(22,20,15,.2) 100%); }
 .site.light .band .h2 { color: var(--linen); }
-.site.light .band .label.red { color: #ff6b74; }
-.site.light .stats b { font-family: var(--serif); color: #ff6b74; }
+.site.light .band .label.red { color: #f0cf72; }
+.site.light .stats b { font-family: var(--serif); color: #f0cf72; }
 .site.light .org::before { background: rgba(244,239,230,.9); }
 .site.light .org .h2 { color: var(--ink); }
 .site.light .org-box { background: var(--paper2); border: 1px solid var(--hair); border-radius: 4px; }
@@ -178,12 +179,12 @@
 .site.light .form-sec .btn-ink { background: var(--ink); color: var(--linen); }
 .site.light .form-sec .btn-ghost { color: var(--ink); border-color: var(--ink); }
 .site.light .credit { color: var(--soft); }
-.static-note { padding: 18px 20px; border-radius: 10px; background: rgba(206,17,38,.08); border: 1px solid rgba(206,17,38,.3); color: inherit; }
+.static-note { padding: 18px 20px; border-radius: 10px; background: rgba(214,172,69,.08); border: 1px solid rgba(214,172,69,.3); color: inherit; }
 .static-note b { color: var(--red); }
 .site.light .pattern-corner { display: none; }
 
 /* ---- shared by both themes: stitch line + stitched key blade ---- */
-.site { --stitch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M7 0l4 4-4 4-4-4z' fill='%23ce1126'/%3E%3C/svg%3E");
+.site { --stitch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M7 0l4 4-4 4-4-4z' fill='%23d6ac45'/%3E%3C/svg%3E");
   --dia: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7 1.5l5.5 5.5L7 12.5 1.5 7z' fill='%23d6ac45'/%3E%3C/svg%3E");
   --serif: 'Fraunces', Georgia, serif; }
 .stitch-band { padding: 26px 0 0; }
