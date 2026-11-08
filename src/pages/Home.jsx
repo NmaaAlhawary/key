@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import StitchKey from '../components/StitchKey.jsx'
+import Slogan from '../components/Slogan.jsx'
 import Icon from '../components/Icon.jsx'
 import { KeyMark } from '../components/Logo.jsx'
 import KeyBlade from '../components/KeyBlade.jsx'
@@ -53,6 +54,7 @@ export default function Home() {
           <div className="label red" style={{ marginBottom: 10 }}>{s.season_label}</div>
           <h1>Every company is a locked door.<br />Join KEYS!</h1>
           <p>An eight-week innovation season where teams of students crack a real problem from a real company, earn six keys, and pitch at the Vault.</p>
+          <Slogan className="slogan-hero" />
         </div>
         <div className="hero-side">
           <div className="date-pill">{s.apps_open ? `Apply ${s.call_dates.replace(' 2027', '')}` : `Opens ${s.call_dates.split(' to ')[0]} March`}</div>
@@ -69,7 +71,7 @@ export default function Home() {
           <div>
             <p>KEYS is a hands-on innovation season for school students aged 13 to 16. Real companies, like a bank, a telecom, a logistics firm or a hotel, hand each team of five the key to a real problem.</p>
             <p>Over eight weeks, teams train in robotics, AI and business, build a working prototype, and pitch it at the Vault to the company leaders who decide, key by key, who opens it.</p>
-            <p><em>Eight weeks. Six keys. One Vault.</em></p>
+            <Slogan />
           </div>
         </div>
       </section>

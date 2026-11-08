@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Logo from './Logo.jsx'
+import Slogan from './Slogan.jsx'
 
 export default function Footer() {
   return (
@@ -14,7 +15,7 @@ export default function Footer() {
           <Link to="/contact">Contact</Link>
         </nav>
       </div>
-      <div className="footer-bottom"><div className="wrap"><span>© {new Date().getFullYear()} KEYS · Amman, Jordan</span><span>Every company is a locked door.</span></div></div>
+      <div className="footer-bottom"><div className="wrap"><span>© {new Date().getFullYear()} KEYS · Amman, Jordan</span><Slogan className="slogan-sm" /></div></div>
     </footer>
   )
 }

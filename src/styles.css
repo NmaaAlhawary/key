@@ -728,3 +728,15 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .key-center { margin: 0 auto; }
 .form-sec .card .key-center { margin-bottom: 26px; }
 .ctabox .key-center { margin-bottom: 22px; }
+
+/* slogan: Eight weeks. Six keys. One Vault. */
+.slogan { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; margin: 0; font-weight: 700; font-size: 18px; letter-spacing: -.005em; color: var(--red-soft); }
+.slogan span { display: inline-flex; align-items: center; }
+.slogan i { width: 7px; height: 7px; margin: 0 12px; background: var(--red); transform: rotate(45deg); flex: none; }
+.slogan-hero { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.14); font-size: clamp(16px, 1.6vw, 20px); }
+.slogan-sm { font-size: 13px; font-weight: 600; }
+.slogan-sm i { width: 5px; height: 5px; margin: 0 9px; }
+.site.light .slogan { color: var(--red); }
+.site.light .slogan-hero { border-top-color: rgba(22,20,15,.12); }
+.hero-box p.slogan, .footer p.slogan { color: var(--red-soft); }
+.site.light .hero-box p.slogan { color: var(--red); }
