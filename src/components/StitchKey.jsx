@@ -1,15 +1,37 @@
-// A small stitched key in the tatreez style: diamond bow, a shaft, and `teeth` rising teeth.
-// Stage n of six gets n teeth, so the six cards read as one growing key.
-export default function StitchKey({ teeth = 1, size = 150, color = 'var(--gold, #d9b46a)', dim = 'rgba(255,255,255,.08)', animate = true }) {
-  const u = 8, cells = []
-  for (let i = -2; i <= 2; i++) for (let j = -2; j <= 2; j++) if (Math.abs(i) + Math.abs(j) === 2 || (Math.abs(i) + Math.abs(j) === 1)) cells.push([i + 2, j + 2, Math.abs(i) + Math.abs(j) === 1 ? 'in' : 'ring'])
-  for (let x = 5; x < 18; x++) cells.push([x, 2, 'shaft'])
-  for (let k = 0; k < 6; k++) for (let d = 1; d <= 1 + Math.floor(k / 2); d++) cells.push([7 + k * 2, 2 + d, k < teeth ? 'tooth' : 'ghost'])
+import { useId } from 'react'
+import { BOW } from './keyBow.js'
+
+// A stitched key in the style of the journey key: the logo's diamond bow, a two-row blade and
+// `teeth` teeth (stage n of six gets n). Unearned teeth show as faint ghosts.
+const P = 8, R = 4.96
+const TOOTH_X = [0, 1, 2, 3, 4, 5].map(i => 116 + i * 24)
+const TIP = 268
+const dia = (x, y) => `${x},${y - R} ${x + R},${y} ${x},${y + R} ${x - R},${y}`
+
+const cells = []
+BOW.forEach(p => cells.push({ p, t: 'bow' }))
+for (let x = 92; x <= TIP - P; x += P) for (const y of [40, 48]) cells.push({ p: dia(x, y), t: 'shaft', x })
+cells.push({ p: dia(TIP, 44), t: 'shaft', x: TIP })
+TOOTH_X.forEach((x, k) => {
+  for (let r = 0; r <= k; r++) for (const cx of [x, x + P]) cells.push({ p: dia(cx, 56 + r * P), t: 'tooth', k, x: cx })
+})
+
+export default function StitchKey({ teeth = 1, size = 150, color, dim = 'rgba(255,255,255,.1)', animate = true, className = '' }) {
+  const id = useId().replace(/:/g, '')
+  const fill = color || `url(#g${id})`
   return (
-    <svg className={animate ? 'stitch-anim' : ''} width={size} height={size * 0.36} viewBox="-6 -6 152 54" aria-hidden="true">
-      {cells.map(([x, y, t], n) => {
-        const cx = x * u, cy = y * u, h = t === 'in' ? u * 0.38 : u * 0.6
-        return <polygon key={n} points={`${cx},${cy - h} ${cx + h},${cy} ${cx},${cy + h} ${cx - h},${cy}`} fill={t === 'ghost' ? dim : color} style={{ '--i': n, '--o': t === 'in' ? 0.55 : 1 }} />
+    <svg className={`skey ${animate ? 'stitch-anim' : ''} ${className}`} width={size} height={size * 112 / 284} viewBox="-6 -6 284 112" aria-hidden="true">
+      {!color && (
+        <defs>
+          <linearGradient id={`g${id}`} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="272" y2="100">
+            <stop offset="0" className="skey-a" /><stop offset=".5" className="skey-b" /><stop offset="1" className="skey-c" />
+          </linearGradient>
+        </defs>
+      )}
+      {cells.map((c, n) => {
+        const ghost = c.t === 'tooth' && c.k >= teeth
+        const i = c.t === 'bow' ? 0 : c.t === 'shaft' ? (c.x - 92) / P / 2 : 14 + c.k * 3
+        return <polygon key={n} points={c.p} fill={ghost ? dim : fill} style={{ '--i': i }} />
       })}
     </svg>
   )

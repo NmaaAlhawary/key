@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import StitchKey from '../components/StitchKey.jsx'
 import PageHero from '../components/PageHero.jsx'
 import Icon from '../components/Icon.jsx'
 import { VAULT_STEPS, VAULT_INSIDE, MOMENTS } from '../content.js'
@@ -26,7 +27,8 @@ export default function Vault() {
       ))}
       <section className="sec glow-sec center">
         <div className="wrap">
-          <h2 className="h2">What is inside the vault</h2>
+          <StitchKey teeth={6} size={340} className="key-center" />
+          <h2 className="h2" style={{ marginTop: 28 }}>What is inside the vault</h2>
           <div className="gcards four">{VAULT_INSIDE.map((x, i) => <div className="gcard" key={x}><h3><span className="chip-ic"><Icon name={['door', 'coin', 'spark', 'key'][i]} size={34} /></span></h3><p style={{ color: '#fff', fontWeight: 600 }}>{x}</p></div>)}</div>
           <p className="lead">3 keys open the vault, so at most two of the four teams can open it. Every member of every team still takes home a golden key.</p>
         </div>

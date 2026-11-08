@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import StitchKey from '../components/StitchKey.jsx'
 import { api, fmtDate, STATIC } from '../api.js'
 import PageHero from '../components/PageHero.jsx'
 
@@ -18,6 +19,7 @@ export default function Status() {
       <div className="form-sec">
       <div className="form-wrap">
         <div className="card">
+          <StitchKey teeth={res ? 6 : 0} size={240} className="key-center on-dark" />
           {STATIC ? <div className="static-note"><b>Coming 1 March 2027.</b> You can check your application here once applications open.</div> : <form onSubmit={check}>
             {err && <div className="alert alert-bad">{err}</div>}
             {res && <div className="alert alert-ok"><b>{res.first_name}</b>, applied {fmtDate(res.submitted)}.<br />{res.message}</div>}

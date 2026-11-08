@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import StitchKey from '../components/StitchKey.jsx'
 import Icon from '../components/Icon.jsx'
 import { KeyMark } from '../components/Logo.jsx'
 import KeyBlade from '../components/KeyBlade.jsx'
@@ -162,6 +163,7 @@ export default function Home() {
       <section className="sec center">
         <div className="wrap">
           <div className="ctabox">
+            <StitchKey teeth={6} size={300} className="key-center" />
             <h2>Ready to find your key?</h2>
             <p>Twenty students. Four real problems. One night the vault opens.</p>
             <small>Applications {s.call_dates} · Ages 13 to 16 · Seat {s.seat_price}</small>

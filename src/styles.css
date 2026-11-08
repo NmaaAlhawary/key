@@ -717,3 +717,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .site.light .nav .btn-red:hover { background: linear-gradient(135deg, #c9a35f, #86632a); color: #fffaf0; }
 .date-pill { background: linear-gradient(135deg, #f3dca4 0%, #d9b46a 48%, #b28b45 100%); color: #140f05; }
 .site.light .date-pill { background: linear-gradient(135deg, #c9a35f 0%, #a9823f 55%, #86632a 100%); color: #fffaf0; }
+
+/* stitched keys: champagne gold gradient, deeper on linen */
+.skey { display: block; overflow: visible; }
+.skey-a { stop-color: #f7e3ae; } .skey-b { stop-color: #d9b46a; } .skey-c { stop-color: #a9833f; }
+.site.light .skey:not(.on-dark) .skey-a { stop-color: #c29b55; }
+.site.light .skey:not(.on-dark) .skey-b { stop-color: #a9823f; }
+.site.light .skey:not(.on-dark) .skey-c { stop-color: #7a5a26; }
+.site.light .skey:not(.on-dark) polygon[fill^='rgba'] { fill: rgba(22,20,15,.09); }
+.key-center { margin: 0 auto; }
+.form-sec .card .key-center { margin-bottom: 26px; }
+.ctabox .key-center { margin-bottom: 22px; }
