@@ -6,8 +6,8 @@ export default function KeyBlade() {
   return (
     <div className="blade">
       <div className="blade-bow">
-        <img className="k-dark" src={asset('/img/key-red-dark.svg')} alt="" />
-        <img className="k-light" src={asset('/img/key-red.svg')} alt="" />
+        <img className="k-dark" src={asset('/img/key-gold-dark.svg')} alt="" />
+        <img className="k-light" src={asset('/img/key-gold.svg')} alt="" />
         <span>Week 0<br /><b>The locked box</b></span>
       </div>
       <div className="blade-shaft">

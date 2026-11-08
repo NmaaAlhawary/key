@@ -151,7 +151,7 @@ export default function Apply() {
       </div>
       <div className="wrap apply-grid">
         <aside className="apply-side">
-          <div className="side-key"><StitchKey teeth={done ? 6 : step} color="#fff" dim="rgba(255,255,255,.14)" size={210} /></div>
+          <div className="side-key"><StitchKey teeth={done ? 6 : step} color="var(--gold, #d6ac45)" dim="rgba(255,255,255,.14)" size={210} /></div>
           <p className="side-cap">{done ? 'All six steps done. Your key is complete.' : `Step ${step + 1} of 6 · one tooth for every step you finish`}</p>
           <ol className="side-steps">
             {STEPS.map((t, i) => {

@@ -184,7 +184,7 @@
 
 /* ---- shared by both themes: stitch line + stitched key blade ---- */
 .site { --stitch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M7 0l4 4-4 4-4-4z' fill='%23ce1126'/%3E%3C/svg%3E");
-  --dia: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7 1.5l5.5 5.5L7 12.5 1.5 7z' fill='%23ce1126'/%3E%3C/svg%3E");
+  --dia: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7 1.5l5.5 5.5L7 12.5 1.5 7z' fill='%23d6ac45'/%3E%3C/svg%3E");
   --serif: 'Fraunces', Georgia, serif; }
 .stitch-band { padding: 26px 0 0; }
 .stitch-line { height: 8px; background: var(--stitch) center / 14px 8px repeat-x; margin: 0 auto; max-width: var(--wrap); }
@@ -267,3 +267,8 @@
 .jcard-img, .row-media { position: relative; }
 .img-credit { position: absolute; right: 8px; bottom: 6px; font-size: 10px; color: rgba(255,255,255,.85); text-shadow: 0 1px 3px rgba(0,0,0,.8); pointer-events: none; }
 .site.light .row-media .img-credit { right: 16px; bottom: 14px; }
+
+/* Golden key: brighter gold on dark, deeper gold on linen so it keeps contrast */
+.site { --gold: #d6ac45; }
+.site.light { --gold: #a97a1e;
+  --dia: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath d='M7 1.5l5.5 5.5L7 12.5 1.5 7z' fill='%23a97a1e'/%3E%3C/svg%3E"); }

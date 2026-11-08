@@ -18,7 +18,7 @@ export function Wordmark({ height = 24 }) {
 
 // `small` swaps to the square-stitch key, drawn for 32 to 64 px.
 export function KeyMark({ height = 60, dark = false, small = false }) {
-  const src = small ? '/img/key-small-red.svg' : dark ? '/img/key-red-dark.svg' : '/img/key-red.svg'
+  const src = small ? '/img/key-small-gold.svg' : dark ? '/img/key-gold-dark.svg' : '/img/key-gold.svg'
   return <img src={asset(src)} alt="" aria-hidden="true" style={{ height, width: 'auto', display: 'block' }} />
 }
 

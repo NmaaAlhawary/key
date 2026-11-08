@@ -1,6 +1,6 @@
 // A small stitched key in the tatreez style: diamond bow, a shaft, and `teeth` rising teeth.
 // Stage n of six gets n teeth, so the six cards read as one growing key.
-export default function StitchKey({ teeth = 1, size = 150, color = 'var(--red)', dim = 'rgba(255,255,255,.08)', animate = true }) {
+export default function StitchKey({ teeth = 1, size = 150, color = 'var(--gold, #d6ac45)', dim = 'rgba(255,255,255,.08)', animate = true }) {
   const u = 8, cells = []
   for (let i = -2; i <= 2; i++) for (let j = -2; j <= 2; j++) if (Math.abs(i) + Math.abs(j) === 2 || (Math.abs(i) + Math.abs(j) === 1)) cells.push([i + 2, j + 2, Math.abs(i) + Math.abs(j) === 1 ? 'in' : 'ring'])
   for (let x = 5; x < 18; x++) cells.push([x, 2, 'shaft'])
