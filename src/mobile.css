@@ -1,0 +1,48 @@
+/* Phone layout. Loaded last so it wins over styles.css and linen.css. */
+html, body { overflow-x: clip; }
+
+@media (max-width: 760px) {
+  .wrap { padding: 0 16px; }
+  .footer-top { padding: 22px 16px; }
+  .footer-bottom .wrap { padding: 0 16px; }
+
+  /* Home hero: photo on top, text card under it, buttons in a row */
+  .hero { padding-top: 64px; }
+  .hero .slides { position: relative; inset: auto; height: 300px; }
+  .hero .hero-box { position: relative; left: auto; right: auto; bottom: auto; max-width: none; margin: -64px 16px 0; padding: 20px 20px 18px; }
+  .hero .hero-box h1 { font-size: clamp(26px, 7.4vw, 32px); line-height: 1.12; }
+  .hero .hero-box h1 .ln { white-space: normal; }
+  .hero .hero-box p { font-size: 15px; }
+  .hero-arrow { display: none; }
+  .hero-side { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px; padding: 18px 16px 48px; }
+  .hero-side > * { font-size: 15px; }
+  .hero .credit, .hero .img-credit { position: static; display: block; padding: 0 16px 10px; text-align: right; }
+
+  /* Tiles: two per row */
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tile, .tile.ptile { width: auto; height: auto; min-height: 104px; }
+  .tile.ptile.photo { height: 190px; }
+  .tile b { font-size: 15px; }
+  .tile span { font-size: 9.5px; letter-spacing: .08em; }
+
+  /* The animated key strip needs a wide screen; the journey cards carry it on phones */
+  .blade { display: none; }
+  .jgrid { margin-top: 28px; }
+
+  /* Piece 1 options: one per row, icon beside text */
+  .opts { grid-template-columns: 1fr; }
+  .opt { display: grid; grid-template-columns: 34px 1fr; column-gap: 14px; align-items: center; text-align: left; padding: 14px 16px; }
+  .opt svg { grid-row: 1 / span 2; }
+  .opt b { grid-column: 2; margin-top: 0; }
+  .opt span { grid-column: 2; }
+
+  /* Session rhythm: hide the tiny labels that cannot fit */
+  .rhythm small, .rhythm2 small { font-size: 10px; }
+
+  .sec { padding: 64px 0; }
+  .h2 { font-size: clamp(28px, 8vw, 36px); }
+  .ctabox { padding: 28px 20px; }
+  .drop-file { grid-template-columns: 52px 1fr; }
+  .drop-file .btn { grid-column: 1 / -1; justify-self: start; }
+  .drop-file b { max-width: 200px; }
+}

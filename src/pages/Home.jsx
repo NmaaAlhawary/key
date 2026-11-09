@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <>
       <section className="hero">
-        <div className="slides" style={{ position: 'absolute', inset: 0 }}>
+        <div className="slides">
           {SLIDES.map((sl, k) => <div key={k} className={`slide ${k === i ? 'on' : ''}`}><img src={asset(sl.img)} alt="" style={{ objectPosition: sl.pos }} /></div>)}
         </div>
         <button className="hero-arrow l" aria-label="Previous slide" onClick={() => go(-1)}>‹</button>
