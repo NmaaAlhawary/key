@@ -5,7 +5,7 @@ import { existsSync, unlinkSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { db, UPLOAD_DIR, getSettings, newRef, hashPassword, checkPassword } from './db.js'
-import { CRITERIA, summarise, statusOf, STATUSES, ROLES, THEMES, ageOn, MIN_AGE, MAX_AGE } from '../src/shared/rules.js'
+import { CRITERIA, summarise, statusOf, STATUSES, ROLES, THEMES, TRACKS, ageOn, MIN_AGE, MAX_AGE } from '../src/shared/rules.js'
 
 const HERE = path.dirname(fileURLToPath(import.meta.url))
 const PORT = Number(process.env.PORT || (process.env.NODE_ENV === 'production' ? 5208 : 8792))
@@ -46,7 +46,7 @@ app.post('/api/applications', upload.single('piece1File'), (req, res) => {
   if (!['girl', 'boy'].includes(p.gender)) errors.push('Gender')
   if (!clean(p.school)) errors.push('School')
   if (!clean(p.piece1_text) && !req.file) errors.push('Show us something')
-  if (![0, 1, 2].includes(p.challenge) || !clean(p.ch_who) || !clean(p.ch_how)) errors.push('Mini-challenge')
+  if (![0, 1].includes(p.challenge) || !TRACKS.some(t => t.key === p.ch_track) || !clean(p.ch_obvious) || (!clean(p.ch_answer) && !clean(p.ch_link))) errors.push('Key Challenge')
   if (!clean(p.parent_name) || !isEmail(clean(p.parent_email)) || !clean(p.parent_phone)) errors.push('Parent details')
   if (!p.commit_sessions || !p.consent_data || !p.parent_confirms) errors.push('Commitment and consent')
   if (errors.length) { drop(); return fail(res, 400, `Please check: ${errors.join(', ')}.`) }
@@ -58,7 +58,7 @@ app.post('/api/applications', upload.single('piece1File'), (req, res) => {
   const data = {
     area: clean(p.area, 120), interests: (p.interests || []).slice(0, 10), themes: (p.themes || []).filter(t => THEMES.some(x => x.key === t)),
     self_role: ROLES.some(r => r.key === p.self_role) ? p.self_role : '', experience: clean(p.experience, 600),
-    piece1_text: clean(p.piece1_text, 3000), ch_who: clean(p.ch_who, 1500), ch_how: clean(p.ch_how, 3000), ch_test: clean(p.ch_test, 1500),
+    piece1_text: clean(p.piece1_text, 3000), ch_track: p.ch_track, ch_obvious: clean(p.ch_obvious, 1500), ch_answer: clean(p.ch_answer, 4000), ch_link: /^https?:\/\//i.test(clean(p.ch_link)) ? clean(p.ch_link, 500) : '',
     parent_relation: clean(p.parent_relation, 60), heard: clean(p.heard, 80), allergies: clean(p.allergies, 400),
     missed_sessions: clean(p.missed_sessions, 400), photo_consent: !!p.photo_consent,
     commit_sessions: !!p.commit_sessions, consent_data: !!p.consent_data, parent_confirms: !!p.parent_confirms,

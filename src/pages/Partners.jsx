@@ -2,7 +2,11 @@ import { useState } from 'react'
 import Modal from '../components/Modal.jsx'
 import { api, STATIC } from '../api.js'
 import Icon from '../components/Icon.jsx'
-import { PARTNER_KINDS, LOCK_GIVES, LOCK_GETS, PROBLEMS } from '../content.js'
+import PartnerKey from '../components/PartnerKey.jsx'
+import KeyBox from '../components/KeyBox.jsx'
+import { PARTNER_KINDS, LOCK_GIVES, LOCK_GETS } from '../content.js'
+
+const MARK = { 'Lock Partner': 'lock', 'Master Key Partner': 'master', 'Spare Key': 'spare', Locksmith: 'locksmith' }
 
 const EMPTY = { org: '', kind: 'Lock Partner', sector: '', contact_name: '', role: '', email: '', phone: '', message: '', website: '' }
 
@@ -30,7 +34,7 @@ export default function Partners() {
               <ul>{LOCK_GETS.map(x => <li key={x}>{x}</li>)}</ul></div>
             <div className="gcard"><h3><span className="chip-ic"><Icon name="clock" size={34} /></span>How it works</h3>
               <p>About four to six hours across the whole season. Training happens in our controlled spaces, never your building, beyond one supervised Door Visit.</p>
-              <ul style={{ marginTop: 10 }}>{LOCK_GIVES.map(([n, t]) => <li key={t}><b style={{ color: '#fff' }}>{n}</b> · {t}</li>)}</ul></div>
+              <ul style={{ marginTop: 10 }}>{LOCK_GIVES.map(([n, t]) => <li key={t}><b className="hi">{n}</b> · {t}</li>)}</ul></div>
           </div>
         </div>
       </section>
@@ -39,37 +43,39 @@ export default function Partners() {
         <div className="wrap">
           <h2 className="h2">Four kinds of partner</h2>
           <p className="lead">Two carry the season: a Lock Partner for every team, and one Master Key Partner for Vault night.</p>
-          <div className="gcards four" style={{ textAlign: 'left' }}>
-            {PARTNER_KINDS.map(p => (
-              <div className="gcard" key={p.name}>
-                <div className="label red">{p.many}</div>
-                <h3 style={{ margin: '8px 0 4px', fontSize: 20 }}>{p.name}</h3>
-                <p style={{ fontSize: 13, color: 'var(--dmuted)', marginBottom: 10 }}>{p.who}</p>
-                <p><b style={{ color: '#fff' }}>Gives:</b> {p.gives}</p>
-                <p style={{ marginTop: 8 }}><b style={{ color: '#fff' }}>Gets:</b> {p.gets}</p>
-              </div>
+          <div className="pkinds">
+            {PARTNER_KINDS.map((p, n) => (
+              <article className={`pkind ${n < 2 ? 'core' : ''}`} key={p.name}>
+                <div className="pkind-top">
+                  <PartnerKey kind={MARK[p.name]} height={46} />
+                  <span className="pkind-many">{p.many}</span>
+                </div>
+                <h3>{p.name}</h3>
+                <p className="pkind-who">{p.who}</p>
+                <div className="pkind-row"><span className="pkind-k">Gives</span><p>{p.gives}</p></div>
+                <div className="pkind-row"><span className="pkind-k">Gets</span><p>{p.gets}</p></div>
+                {n < 2 && <div className="pkind-flag">Carries the season</div>}
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="sec">
-        <div className="wrap">
-          <h2 className="h2 center" style={{ display: 'block' }}>Problems a team of five could crack</h2>
-          <table className="ptable">
-            <thead><tr><th>Sector</th><th>The problem</th><th>What a team could build</th></tr></thead>
-            <tbody>{PROBLEMS.map(p => <tr key={p.sector}><td>{p.sector}</td><td><b>{p.problem}</b></td><td>{p.build}</td></tr>)}</tbody>
-          </table>
-          <p className="lead center" style={{ margin: '22px auto 0' }}>A good problem is real today, safe for kids, can be prototyped in four weeks, and fits in one sentence a 13-year-old can explain.</p>
-        </div>
-      </section>
-
       <section className="sec glow-sec center" id="enquire">
         <div className="wrap">
-          <div className="ctabox">
-            <h2>Ready to bring your challenge to life?</h2>
-            <p>Tell us a little about you. We will reply with the partner pack and a time to meet.</p>
-            <button className="btn btn-red arrow" onClick={() => setOpen(true)}>Become a partner</button>
+          <div className="ctabox ctasplit">
+            <div className="ctasplit-text">
+              <div className="label red">Bring a problem</div>
+              <h2>Ready to bring your challenge to life?</h2>
+              <p>Put one real problem in a locked box. Five students spend eight weeks earning the keys to open it, and pitch their answer to you on Vault night.</p>
+              <ul className="ctasplit-steps">
+                <li><b>1</b>Tell us a little about you</li>
+                <li><b>2</b>Get the partner pack and a time to meet</li>
+                <li><b>3</b>Write the problem card together</li>
+              </ul>
+              <button className="btn btn-red arrow" onClick={() => setOpen(true)}>Become a partner</button>
+            </div>
+            <KeyBox />
           </div>
         </div>
       </section>

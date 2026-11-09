@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { api, fmtDate, fmtTime } from '../api.js'
-import { CRITERIA, STATUSES, ROLES, THEMES, CHALLENGES, statusOf } from '../shared/rules.js'
+import { CRITERIA, STATUSES, ROLES, THEMES, CHALLENGES, TRACKS, statusOf } from '../shared/rules.js'
 import { useAdmin, StatusPill } from './AdminApp.jsx'
 
 export default function ApplicationDetail() {
@@ -92,11 +92,17 @@ export default function ApplicationDetail() {
           </div>
 
           <div className="ad-card">
-            <h3>Piece 2 · Mini-challenge <small className="label">Tech thinking</small></h3>
-            <div className="qa"><span>Problem {a.challenge + 1}</span><p>{CHALLENGES[a.challenge]}</p></div>
-            <div className="qa"><span>Who it helps</span><p>{d.ch_who}</p></div>
-            <div className="qa"><span>How it works</span><p>{d.ch_how}</p></div>
-            <div className="qa" style={{ marginBottom: 0 }}><span>How to test it</span><p>{d.ch_test || '—'}</p></div>
+            <h3>Piece 2 · Key Challenge <small className="label">{TRACKS.find(t => t.key === d.ch_track)?.name || 'Track'}</small></h3>
+            <div className="qa"><span>Problem {'AB'[a.challenge] ?? a.challenge + 1}</span><p>{CHALLENGES[a.challenge] || '—'}</p></div>
+            {d.ch_track ? <>
+              <div className="qa"><span>The obvious idea</span><p>{d.ch_obvious || '—'}</p></div>
+              <div className="qa"><span>Answer</span><p>{d.ch_answer || '—'}</p></div>
+              <div className="qa"><span>Link</span><p>{d.ch_link ? <a href={d.ch_link} target="_blank" rel="noreferrer noopener">{d.ch_link}</a> : '—'}</p></div>
+              {(() => { const t = TRACKS.find(x => x.key === d.ch_track); return t && <div className="qa" style={{ marginBottom: 0 }}><span>Scoring guide</span><p><b>A 5:</b> {t.five}. <b>Red flag:</b> {t.flag}. Points to: {t.role}.</p></div> })()}
+            </> : <>
+              <div className="qa"><span>Who it helps</span><p>{d.ch_who}</p></div>
+              <div className="qa"><span>How it works</span><p>{d.ch_how}</p></div>
+            </>}
           </div>
 
           <div className="ad-card">

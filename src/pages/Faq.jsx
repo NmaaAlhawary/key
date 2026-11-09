@@ -12,7 +12,7 @@ export default function Faq() {
         <div className="faq" style={{ textAlign: 'left' }}>
           {FAQ.map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a.replace('350 JOD', s.seat_price)}</p></details>)}
         </div>
-        <p className="lead" style={{ margin: '30px auto 0' }}>Still have a question? <Link to="/contact" style={{ color: '#fff' }}>Contact us</Link>.</p>
+        <p className="lead" style={{ margin: '30px auto 0' }}>Still have a question? <Link to="/contact" className="hi-link">Contact us</Link>.</p>
       </div>
     </section>
   )

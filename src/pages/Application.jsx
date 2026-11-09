@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero.jsx'
 import Icon from '../components/Icon.jsx'
-import { CHALLENGES } from '../shared/rules.js'
+import { CHALLENGES, TRACKS } from '../shared/rules.js'
 import { PICK } from '../content.js'
 import { useSettings } from '../useSettings.js'
 
@@ -23,7 +23,7 @@ export default function Application() {
             </div>
             <div className="gcard">
               <h3><span className="chip-ic"><Icon name="coin" size={34} /></span>What does it cost?</h3>
-              <p>A season seat is <b style={{ color: '#fff' }}>{s.seat_price}</b>. Early bird and siblings get 10% off, and scholarship seats are funded by partners for students who cannot pay. A seat includes:</p>
+              <p>A season seat is <b className="hi">{s.seat_price}</b>. Early bird and siblings get 10% off, and scholarship seats are funded by partners for students who cannot pay. A seat includes:</p>
               <ul><li>16 sessions with trained facilitators, kits and materials</li><li>A supervised Door Visit to a real company</li><li>Six smart keys, a filmed pitch and a project page</li><li>Seats for your family at Vault night</li></ul>
             </div>
           </div>
@@ -33,7 +33,7 @@ export default function Application() {
       <section className="sec center">
         <div className="wrap">
           <h2 className="h2">The application</h2>
-          <p className="lead">A 10-minute form, filled in with a parent. The basics, your interests, and two short pieces.</p>
+          <p className="lead">A 15-minute form, filled in with a parent. The basics, your interests, and two short pieces.</p>
           <div className="gcards">
             <div className="gcard">
               <h3><span className="chip-ic"><Icon name="mic" size={34} /></span>Piece 1 · Show us something</h3>
@@ -49,12 +49,13 @@ export default function Application() {
               </div>
             </div>
             <div className="gcard">
-              <h3><span className="chip-ic"><Icon name="spark" size={34} /></span>Piece 2 · Tech mini-challenge</h3>
-              <p>Pick one problem and tell us how tech could solve it. No coding needed.</p>
-              {CHALLENGES.map((c, i) => <div className="ch" key={i}><b>{i + 1}</b><span>{c}</span></div>)}
+              <h3><span className="chip-ic"><Icon name="spark" size={34} /></span>Piece 2 · The Key Challenge</h3>
+              <p>One open problem, five ways to answer it. Pick a problem, then the track that fits you best.</p>
+              {CHALLENGES.map((c, i) => <Link className="ch" to={`/challenges/problem-${'ab'[i]}`} key={i}><b>{'AB'[i]}</b><span>{c}</span></Link>)}
+              <p className="ch-tracks">{TRACKS.map(t => t.name).join(' · ')}</p>
             </div>
           </div>
-          <p className="lead" style={{ marginTop: 22 }}>We look for who it helps, how it works in simple steps, and one way to test it. A good idea beats a perfect drawing.</p>
+          <p className="lead" style={{ marginTop: 22 }}>Beat the obvious idea, and show your thinking. A clear idea beats a perfect video. <Link to="/challenges" className="hi-link">See the Key Challenge</Link>.</p>
         </div>
       </section>
 
@@ -72,7 +73,7 @@ export default function Application() {
         <div className="wrap" style={{ display: 'grid', gap: 24 }}>
           <div className="ctabox" style={{ textAlign: 'left', maxWidth: 760 }}>
             <h2 style={{ fontSize: 20 }}>Online application</h2>
-            <p>Applications are open from <b style={{ color: '#fff' }}>{s.call_dates}</b>. Fill in the form with a parent and be yourself: an honest answer beats a polished one.</p>
+            <p>Applications are open from <b className="hi">{s.call_dates}</b>. Fill in the form with a parent and be yourself: an honest answer beats a polished one.</p>
             <p>After the call closes, about 40 shortlisted students are invited to the Key Trial, a fun 90-minute group challenge. Then 20 are picked into four teams of five.</p>
             <p style={{ margin: 0 }}>Everyone hears back within 7 days of the Key Trial. The waiting list gets priority next season.</p>
           </div>

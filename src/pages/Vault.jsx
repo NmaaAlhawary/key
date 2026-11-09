@@ -29,7 +29,7 @@ export default function Vault() {
         <div className="wrap">
           <StitchKey teeth={6} size={340} className="key-center" />
           <h2 className="h2" style={{ marginTop: 28 }}>What is inside the vault</h2>
-          <div className="gcards four">{VAULT_INSIDE.map((x, i) => <div className="gcard" key={x}><h3><span className="chip-ic"><Icon name={['door', 'coin', 'spark', 'key'][i]} size={34} /></span></h3><p style={{ color: '#fff', fontWeight: 600 }}>{x}</p></div>)}</div>
+          <div className="gcards four">{VAULT_INSIDE.map((x, i) => <div className="gcard" key={x}><h3><span className="chip-ic"><Icon name={['door', 'coin', 'spark', 'key'][i]} size={34} /></span></h3><p className="hi" style={{ fontWeight: 600 }}>{x}</p></div>)}</div>
           <p className="lead">3 keys open the vault, so at most two of the four teams can open it. Every member of every team still takes home a golden key.</p>
         </div>
       </section>

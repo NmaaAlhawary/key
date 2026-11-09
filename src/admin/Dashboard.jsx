@@ -76,7 +76,7 @@ export default function Dashboard() {
         </div>
         <div className="ad-card"><h3>Girls and boys <small className="muted">target: at least 2 of each per team</small></h3><Bars data={s.gender} label={k => (k === 'girl' ? 'Girls' : k === 'boy' ? 'Boys' : k)} /></div>
         <div className="ad-card"><h3>Ages on 1 April 2027</h3><Bars data={s.age} label={k => `Age ${k}`} /></div>
-        <div className="ad-card"><h3>Mini-challenge picked</h3><Bars data={s.challenge} label={k => `${k}. ${CHALLENGES[k - 1]?.split(' ').slice(0, 3).join(' ')}…`} /></div>
+        <div className="ad-card"><h3>Key Challenge problem</h3><Bars data={s.challenge} label={k => `${'AB'[k - 1] || k}. ${CHALLENGES[k - 1]?.split(' ').slice(0, 3).join(' ') || ''}…`} /></div>
         <div className="ad-card"><h3>How they heard</h3><Bars data={s.heard} /></div>
       </div>
     </>

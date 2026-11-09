@@ -8,6 +8,7 @@ import Partners from './pages/Partners.jsx'
 import HowItWorks from './pages/HowItWorks.jsx'
 import Application from './pages/Application.jsx'
 import Challenges from './pages/Challenges.jsx'
+import Challenge from './pages/Challenge.jsx'
 import Vault from './pages/Vault.jsx'
 import Parents from './pages/Parents.jsx'
 import Faq from './pages/Faq.jsx'
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/application" element={<Application />} />
           <Route path="/challenges" element={<Challenges />} />
+          <Route path="/challenges/:slug" element={<Challenge />} />
           <Route path="/vault" element={<Vault />} />
           <Route path="/parents" element={<Parents />} />
           <Route path="/faq" element={<Faq />} />

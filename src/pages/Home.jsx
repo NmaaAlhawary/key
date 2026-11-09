@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import StitchKey from '../components/StitchKey.jsx'
+import PartnerKey from '../components/PartnerKey.jsx'
+import KeyBox from '../components/KeyBox.jsx'
 import Slogan from '../components/Slogan.jsx'
 import Icon from '../components/Icon.jsx'
 import { KeyMark } from '../components/Logo.jsx'
@@ -18,10 +20,10 @@ const SLIDES = [
 ]
 
 const JOURNEY = [
-  { title: 'Apply', sub: 'Open call', ic: 'user', bg: '#6d4aff', img: '/img/hands.jpg', text: 'Ages 13 to 16, any school in Amman. A 10-minute form, no grades asked. Then a fun Key Trial.' },
-  { title: 'The Locked Box', sub: 'Week 0 · Handover', ic: 'box', bg: '#0f9d58', img: '/img/slate.jpg', text: 'A real company hands your team of five a sealed box with a real problem inside.' },
-  { title: 'Six Keys', sub: 'Weeks 1 to 7 · Training', ic: 'key', bg: '#d9b46a', img: '/img/keys.jpg', text: 'Train in robotics, AI and business. Pass each stage\'s challenge to earn its key.' },
-  { title: 'The Vault', sub: 'Week 8 · Pitch night', ic: 'vault', bg: '#f08c00', img: '/img/stage.jpg', text: 'Pitch to the leaders who hold the keys. Three golden keys open the vault on stage.' },
+  { title: 'Apply', sub: 'Open call', ic: 'user', bg: '#6d4aff', img: '/img/journey-apply.jpg', text: 'Ages 13 to 16, any school in Amman. A 15-minute form, no grades asked. Then a fun Key Trial.' },
+  { title: 'The Locked Box', sub: 'Week 0 · Handover', ic: 'box', bg: '#0f9d58', img: '/img/journey-box.jpg', text: 'A real company hands your team of five a sealed box with a real problem inside.' },
+  { title: 'Six Keys', sub: 'Weeks 1 to 7 · Training', ic: 'key', bg: '#d9b46a', img: '/img/journey-keys.jpg', text: 'Train in robotics, AI and business. Pass each stage\'s challenge to earn its key.' },
+  { title: 'The Vault', sub: 'Week 8 · Pitch night', ic: 'vault', bg: '#f08c00', img: '/img/journey-vault.jpg', text: 'Pitch to the leaders who hold the keys. Three golden keys open the vault on stage.' },
 ]
 
 const SECTOR_ICONS = ['phone', 'truck', 'food', 'bank']
@@ -51,9 +53,8 @@ export default function Home() {
         <button className="hero-arrow l" aria-label="Previous slide" onClick={() => go(-1)}>‹</button>
         <button className="hero-arrow r" aria-label="Next slide" onClick={() => go(1)}>›</button>
         <div className="hero-box" key={`box-${i}`}>
-          <div className="label red" style={{ marginBottom: 10 }}>{s.season_label}</div>
-          <h1>Every company is a locked door.<br />Join KEYS!</h1>
-          <p>An eight-week innovation season where teams of students crack a real problem from a real company, earn six keys, and pitch at the Vault.</p>
+          <h1><span className="ln">Every company is a locked door.</span><br /><span className="ln">Earn the keys to open it.</span></h1>
+          <p>An eight-week innovation season where student teams crack a real company's problem, earn six keys, and pitch inside the Vault.</p>
           <Slogan className="slogan-hero" />
         </div>
         <div className="hero-side">
@@ -84,7 +85,7 @@ export default function Home() {
             {PROBLEMS.slice(0, 4).map((p, i) => {
               const signed = partners.find(x => x.kind === 'Lock Partner' && x.team_sector === p.sector)
               return signed ? <LogoTile key={p.sector} p={signed} label={`Team ${i + 1} · ${p.sector}`} /> : (
-                <Link className="tile ptile" to="/challenges" key={p.sector}>
+                <Link className="tile ptile" to={`/challenges/${p.slug}`} key={p.sector}>
                   <Icon name={SECTOR_ICONS[i]} size={44} />
                   <b>{p.sector}</b><span>Team {i + 1} · to be announced</span>
                 </Link>
@@ -93,13 +94,13 @@ export default function Home() {
           </div>
           <h3 className="subhead">Season one supporters</h3>
           <div className="tiles">
-            {[['Master Key Partner', 'key'], ['Spare Key', 'heart'], ['Locksmith', 'toolbox']].map(([k, ic]) => {
+            {[['Master Key Partner', 'master'], ['Spare Key', 'spare'], ['Locksmith', 'locksmith']].map(([k, ic]) => {
               const signed = partners.filter(x => x.kind === k)
               return signed.length ? signed.map(x => <LogoTile key={x.id} p={x} label={k} light />) : (
-                <Link className="tile ptile light" to="/partners" key={k}><Icon name={ic} size={40} color="var(--red)" /><b>{k}</b><span>Seat open</span></Link>
+                <Link className="tile ptile light" to="/partners" key={k}><PartnerKey kind={ic} /><b>{k}</b><span>Seat open</span></Link>
               )
             })}
-            <Link className="tile ptile red" to="/partners"><Icon name="hand" size={40} color="#fff" /><b>Bring a problem</b><span>Become a partner →</span></Link>
+            <Link className="tile ptile red" to="/partners"><PartnerKey kind="lock" color="#fff" /><b>Bring a problem</b><span>Become a partner →</span></Link>
           </div>
         </div>
       </section>
@@ -165,7 +166,7 @@ export default function Home() {
       <section className="sec center">
         <div className="wrap">
           <div className="ctabox">
-            <StitchKey teeth={6} size={300} className="key-center" />
+            <KeyBox />
             <h2>Ready to find your key?</h2>
             <p>Twenty students. Four real problems. One night the vault opens.</p>
             <small>Applications {s.call_dates} · Ages 13 to 16 · Seat {s.seat_price}</small>

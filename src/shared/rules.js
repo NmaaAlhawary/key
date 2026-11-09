@@ -52,10 +52,18 @@ export const THEMES = [
   { key: 'water', label: 'Water and the home' },
 ]
 
+// The Key Challenge (Pilot Playbook, phase 1): one of two open problems, answered in one of five tracks.
 export const CHALLENGES = [
-  'Your grandmother forgets her medicine. How could tech help her remember?',
-  'The plants at your school die over the weekend. Design something that saves them.',
-  'Students wait for the bus in the sun and never know when it comes. What would you build?',
+  'New students feel lost and alone in their first week at school.',
+  'Families in your area throw away a lot of bread and food every week.',
+]
+
+export const TRACKS = [
+  { key: 'research', name: 'Research', tag: 'Find the truth', ask: 'Talk to 2 real people who have this problem. What did you learn that surprised you?', five: 'Talked to 2 real people, shares a quote, found something surprising', flag: 'No real person, only guesses', role: 'researcher' },
+  { key: 'design', name: 'Design', tag: 'Show it', ask: 'Make a mockup, model or prototype photo in any app or material. How would people use it?', five: 'A mockup or model a user could understand without help', flag: 'Pretty but no clear use', role: 'builder' },
+  { key: 'tech', name: 'Tech', tag: 'Explain how it works', ask: 'What goes in, what happens, what comes out? Which sensors, apps or tools?', five: 'Clear input, process, output. Names real tools or sensors', flag: '"An app" with no steps', role: 'coder' },
+  { key: 'money', name: 'Money', tag: 'Make it last', ask: 'Who would pay for it, how much, and why would they keep paying?', five: 'Names who pays, a fair price, and why they keep paying', flag: '"It will be free" or "ads"', role: 'captain' },
+  { key: 'story', name: 'Story', tag: 'Sell it', ask: 'A 1-minute pitch video. Make us care about the problem and the idea.', five: 'Hooks us in 10 seconds, makes us care about one real person', flag: 'Reads a script, no feeling', role: 'storyteller' },
 ]
 
 // Age on the first day of the season decides eligibility (13 to 16).

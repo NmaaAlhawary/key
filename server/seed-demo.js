@@ -35,14 +35,15 @@ statuses.forEach((status, i) => {
       'I built a cardboard phone stand with a slot for the charger. My mum uses it every day in the kitchen.',
       'I made a small website for my class to vote on the trip. Two friends tested it and found a bug I fixed.',
       'I painted a map of our street so my grandfather can see where the new pharmacy is.']),
-    ch_who: 'It helps ' + pick(['my grandmother', 'the school gardener', 'students at the bus stop']) + '.',
-    ch_how: '1. A sensor notices the problem. 2. It sends a sound or a light. 3. The person sees it and acts.',
-    ch_test: 'Try it for one week and count how many times it worked.',
+    ch_track: ['research', 'design', 'tech', 'money', 'story'][i % 5],
+    ch_obvious: 'Everyone would say "make an app". But the people with this problem do not open new apps.',
+    ch_answer: 'I asked two people about it. One said the hardest part is the first day. So my idea starts before day one: a buddy and a short welcome note.',
+    ch_link: '',
     parent_relation: pick(['Mother', 'Father']), heard: pick(heard), allergies: i % 7 ? '' : 'Peanuts',
     photo_consent: i % 3 !== 0, commit_sessions: true, consent_data: true, parent_confirms: true, missed_sessions: i % 5 ? '' : 'Might miss one session for a family trip.',
   }
   const r = ins.run(newRef(), status, first, 'Demo', dob, ageOn(dob), gender, schools[i % schools.length], `Grade ${7 + (i % 4)}`,
-    `Parent of ${first} (demo)`, `parent${i + 1}.demo@example.com`, '07 0000 0000', i % 3, JSON.stringify(data),
+    `Parent of ${first} (demo)`, `parent${i + 1}.demo@example.com`, '07 0000 0000', i % 2, JSON.stringify(data),
     ['shortlisted', 'selected', 'waitlist', 'declined'].includes(status) ? ROLES[i % 5].key : null, created)
   const id = r.lastInsertRowid
   db.prepare('INSERT INTO activity (app_id, kind, body, created_at) VALUES (?, ?, ?, ?)').run(id, 'status', 'Application submitted', created)

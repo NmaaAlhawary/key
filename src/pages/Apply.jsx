@@ -5,7 +5,7 @@ import { useSettings } from '../useSettings.js'
 import StitchKey from '../components/StitchKey.jsx'
 import Icon from '../components/Icon.jsx'
 import { asset } from '../asset.js'
-import { CHALLENGES, ROLES, THEMES, ageOn, MIN_AGE, MAX_AGE } from '../shared/rules.js'
+import { CHALLENGES, TRACKS, ROLES, THEMES, ageOn, MIN_AGE, MAX_AGE } from '../shared/rules.js'
 
 const DRAFT = 'keys-apply-draft'
 const STEPS = ['About you', 'Interests', 'Show us', 'Challenge', 'Parent', 'Review']
@@ -15,7 +15,7 @@ const HEARD = ['School', 'Instagram', 'Parent group', 'A friend', 'NGO partner',
 const EMPTY = {
   first_name: '', last_name: '', dob: '', gender: '', school: '', grade: '', area: '',
   interests: [], themes: [], self_role: '', experience: '',
-  piece1_text: '', challenge: null, ch_who: '', ch_how: '', ch_test: '',
+  piece1_text: '', challenge: null, ch_track: '', ch_obvious: '', ch_answer: '', ch_link: '',
   parent_name: '', parent_relation: '', parent_email: '', parent_phone: '', heard: '', allergies: '', missed_sessions: '',
   commit_sessions: false, parent_confirms: false, consent_data: false, photo_consent: false, website: '',
 }
@@ -49,8 +49,9 @@ function validate(step, f, file) {
   if (step === 2 && !f.piece1_text.trim() && !file) e.piece1 = 'Tell us about it, or add a photo, drawing or voice note'
   if (step === 3) {
     if (f.challenge == null) e.challenge = 'Pick one problem'
-    if (!f.ch_who.trim()) e.ch_who = 'Required'
-    if (!f.ch_how.trim()) e.ch_how = 'Required'
+    if (!f.ch_track) e.ch_track = 'Pick one track'
+    if (!f.ch_obvious.trim()) e.ch_obvious = 'Required'
+    if (!f.ch_answer.trim() && !f.ch_link.trim()) e.ch_answer = 'Write your answer, or add a link to your video, photos or page'
   }
   if (step === 4) {
     if (!f.parent_name.trim()) e.parent_name = 'Required'
@@ -147,7 +148,7 @@ export default function Apply() {
       <div className="wrap apply-head">
         <div className="label">{s.season_label} · Applications {s.call_dates}</div>
         <h1>Apply to KEYS</h1>
-        <p>About 10 minutes, filled in with a parent. No grades, no experience, no coding needed.</p>
+        <p>About 15 minutes, filled in with a parent. No grades, no experience, no coding needed.</p>
       </div>
       <div className="wrap apply-grid">
         <aside className="apply-side">
@@ -167,7 +168,7 @@ export default function Apply() {
             })}
           </ol>
           <div className="side-info">
-            <div><Icon name="clock" size={20} />About 10 minutes</div>
+            <div><Icon name="clock" size={20} />About 15 minutes</div>
             <div><Icon name="shield" size={20} />Saved on this device until you send</div>
             <div><Icon name="people" size={20} />A parent fills in step 5</div>
           </div>
@@ -256,16 +257,21 @@ export default function Apply() {
               </>}
 
               {step === 3 && <>
-                <h2 className="form-title">Piece 2 · Tech mini-challenge</h2>
-                <p className="form-sub">Pick one problem and tell us how tech could solve it. No coding needed. A good idea beats a perfect drawing.</p>
-                <Field label="Pick one" req error={errors.challenge}>
+                <h2 className="form-title">Piece 2 · The Key Challenge</h2>
+                <p className="form-sub">One open problem, five ways to answer it. There is no single right answer. A clear idea beats a perfect video. <Link to="/challenges" target="_blank" className="hi-link">Read the Key Challenge</Link></p>
+                <Field label="1. Pick one problem" req error={errors.challenge}>
                   <div>{CHALLENGES.map((c, i) => (
-                    <button type="button" key={i} className={`choice ${f.challenge === i ? 'on' : ''}`} onClick={() => set('challenge', i)}><b>{i + 1}</b><span>{c}</span></button>
+                    <button type="button" key={i} className={`choice ${f.challenge === i ? 'on' : ''}`} onClick={() => set('challenge', i)}><b>{'AB'[i]}</b><span>{c}</span></button>
                   ))}</div>
                 </Field>
-                <Field label="Who does it help?" req error={errors.ch_who}><textarea {...bind('ch_who')} rows={2} /></Field>
-                <Field label="How does it work, in simple steps?" req error={errors.ch_how} hint="Step 1, step 2, step 3 is perfect."><textarea {...bind('ch_how')} rows={5} /></Field>
-                <Field label="How would you test that it works?"><textarea {...bind('ch_test')} rows={2} /></Field>
+                <Field label="2. Pick your track" req error={errors.ch_track}>
+                  <div className="tracks">{TRACKS.map(t => (
+                    <button type="button" key={t.key} className={`choice track ${f.ch_track === t.key ? 'on' : ''}`} onClick={() => set('ch_track', t.key)}><b>{t.name}</b><span><em>{t.tag}.</em> {t.ask}</span></button>
+                  ))}</div>
+                </Field>
+                <Field label="3. The obvious idea" req error={errors.ch_obvious} hint="The first idea everyone would have. Then tell us why yours is different."><textarea {...bind('ch_obvious')} rows={3} /></Field>
+                <Field label="4. Your answer" req error={errors.ch_answer} hint="Write it here, or add a link below. Show your thinking: how you got there matters more than how polished it looks."><textarea {...bind('ch_answer')} rows={6} /></Field>
+                <Field label="Link to your video, photos or page" hint="Optional if you wrote your answer. A 1-minute video, photos, screenshots or a project page."><input type="url" {...bind('ch_link')} placeholder="https://" /></Field>
               </>}
 
               {step === 4 && <>
@@ -305,12 +311,13 @@ export default function Apply() {
                   </dl>
                   <h4>Show us something</h4>
                   <dl><dt>Story</dt><dd>{f.piece1_text || '—'}</dd><dt>File</dt><dd>{file?.name || '—'}</dd></dl>
-                  <h4>Mini-challenge</h4>
+                  <h4>Key Challenge</h4>
                   <dl>
-                    <dt>Problem</dt><dd>{CHALLENGES[f.challenge]}</dd>
-                    <dt>Who it helps</dt><dd>{f.ch_who}</dd>
-                    <dt>How it works</dt><dd>{f.ch_how}</dd>
-                    <dt>How to test</dt><dd>{f.ch_test || '—'}</dd>
+                    <dt>Problem</dt><dd>{f.challenge != null && `${'AB'[f.challenge]}. ${CHALLENGES[f.challenge]}`}</dd>
+                    <dt>Track</dt><dd>{TRACKS.find(t => t.key === f.ch_track)?.name || '—'}</dd>
+                    <dt>The obvious idea</dt><dd>{f.ch_obvious}</dd>
+                    <dt>Answer</dt><dd>{f.ch_answer || '—'}</dd>
+                    <dt>Link</dt><dd>{f.ch_link || '—'}</dd>
                   </dl>
                   <h4>Parent</h4>
                   <dl>
