@@ -35,11 +35,11 @@ export const STATUSES = [
 export const statusOf = k => STATUSES.find(s => s.key === k) || STATUSES[0]
 
 export const ROLES = [
-  { key: 'captain', label: 'Captain', short: 'C', note: 'Keeps time, gets quiet ones to speak' },
-  { key: 'coder', label: 'Coder', short: 'CO', note: 'Thinks in steps: "if this, then that"' },
-  { key: 'builder', label: 'Builder', short: 'B', note: 'Grabs the materials, tests again and again' },
-  { key: 'researcher', label: 'Researcher', short: 'R', note: 'Asks who has the problem and why' },
-  { key: 'storyteller', label: 'Storyteller', short: 'S', note: 'Explains the idea best' },
+  { key: 'captain', ic: 'flag', label: 'Captain', short: 'C', note: 'Keeps time, gets quiet ones to speak' },
+  { key: 'coder', ic: 'code', label: 'Coder', short: 'CO', note: 'Thinks in steps: "if this, then that"' },
+  { key: 'builder', ic: 'hammer', label: 'Builder', short: 'B', note: 'Grabs the materials, tests again and again' },
+  { key: 'researcher', ic: 'search', label: 'Researcher', short: 'R', note: 'Asks who has the problem and why' },
+  { key: 'storyteller', ic: 'mic', label: 'Storyteller', short: 'S', note: 'Explains the idea best' },
 ]
 
 // Problem themes a student can pick in the form; each team is matched to one.

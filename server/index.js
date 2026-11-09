@@ -17,8 +17,8 @@ const upload = multer({
     destination: UPLOAD_DIR,
     filename: (_req, file, cb) => cb(null, `${Date.now()}-${randomBytes(6).toString('hex')}${path.extname(file.originalname).toLowerCase().slice(0, 8)}`),
   }),
-  limits: { fileSize: 15 * 1024 * 1024 },
-  fileFilter: (_req, file, cb) => cb(null, /^(image|audio|video)\//.test(file.mimetype) || file.mimetype === 'application/pdf'),
+  limits: { fileSize: 25 * 1024 * 1024, files: 5 },
+  fileFilter: (_req, file, cb) => cb(null, /^(image|video)\//.test(file.mimetype) || file.mimetype === 'application/pdf'),
 })
 
 const clean = (v, max = 2000) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
@@ -32,8 +32,9 @@ app.get('/api/public/settings', (_req, res) => {
   res.json({ apps_open: s.apps_open === 'true', call_dates: s.call_dates, season_label: s.season_label, seat_price: s.seat_price })
 })
 
-app.post('/api/applications', upload.single('piece1File'), (req, res) => {
-  const drop = () => req.file && unlinkSync(req.file.path)
+app.post('/api/applications', upload.array('piece1File', 5), (req, res) => {
+  const ups = req.files || []
+  const drop = () => ups.forEach(f => unlinkSync(f.path))
   if (getSettings().apps_open !== 'true') { drop(); return fail(res, 403, 'Applications are closed right now.') }
   let p
   try { p = JSON.parse(req.body.payload || '{}') } catch { drop(); return fail(res, 400, 'Bad form data.') }
@@ -45,7 +46,7 @@ app.post('/api/applications', upload.single('piece1File'), (req, res) => {
   if (age == null || age < MIN_AGE || age > MAX_AGE) errors.push(`Age ${MIN_AGE} to ${MAX_AGE} on 1 April 2027`)
   if (!['girl', 'boy'].includes(p.gender)) errors.push('Gender')
   if (!clean(p.school)) errors.push('School')
-  if (!clean(p.piece1_text) && !req.file) errors.push('Show us something')
+  if (!clean(p.piece1_text) && !ups.length && !clean(p.piece1_link)) errors.push('Show us something')
   if (![0, 1].includes(p.challenge) || !TRACKS.some(t => t.key === p.ch_track) || !clean(p.ch_obvious) || (!clean(p.ch_answer) && !clean(p.ch_link))) errors.push('Key Challenge')
   if (!clean(p.parent_name) || !isEmail(clean(p.parent_email)) || !clean(p.parent_phone)) errors.push('Parent details')
   if (!p.commit_sessions || !p.consent_data || !p.parent_confirms) errors.push('Commitment and consent')
@@ -58,7 +59,8 @@ app.post('/api/applications', upload.single('piece1File'), (req, res) => {
   const data = {
     area: clean(p.area, 120), interests: (p.interests || []).slice(0, 10), themes: (p.themes || []).filter(t => THEMES.some(x => x.key === t)),
     self_role: ROLES.some(r => r.key === p.self_role) ? p.self_role : '', experience: clean(p.experience, 600),
-    piece1_text: clean(p.piece1_text, 3000), ch_track: p.ch_track, ch_obvious: clean(p.ch_obvious, 1500), ch_answer: clean(p.ch_answer, 4000), ch_link: /^https?:\/\//i.test(clean(p.ch_link)) ? clean(p.ch_link, 500) : '',
+    piece1_text: clean(p.piece1_text, 3000), piece1_link: /^https?:\/\//i.test(clean(p.piece1_link)) ? clean(p.piece1_link, 500) : '',
+    files: ups.map(f => ({ name: f.originalname.slice(0, 120), path: f.filename, type: f.mimetype })), ch_track: p.ch_track, ch_obvious: clean(p.ch_obvious, 1500), ch_answer: clean(p.ch_answer, 4000), ch_link: /^https?:\/\//i.test(clean(p.ch_link)) ? clean(p.ch_link, 500) : '',
     parent_relation: clean(p.parent_relation, 60), heard: clean(p.heard, 80), allergies: clean(p.allergies, 400),
     missed_sessions: clean(p.missed_sessions, 400), photo_consent: !!p.photo_consent,
     commit_sessions: !!p.commit_sessions, consent_data: !!p.consent_data, parent_confirms: !!p.parent_confirms,
@@ -68,7 +70,7 @@ app.post('/api/applications', upload.single('piece1File'), (req, res) => {
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`).run(
     ref, clean(p.first_name, 60), clean(p.last_name, 60), p.dob, age, p.gender, clean(p.school, 120), clean(p.grade, 20),
     clean(p.parent_name, 120), clean(p.parent_email, 160).toLowerCase(), clean(p.parent_phone, 40), p.challenge, JSON.stringify(data),
-    req.file?.originalname?.slice(0, 120) || null, req.file?.filename || null, req.file?.mimetype || null)
+    ups[0]?.originalname?.slice(0, 120) || null, ups[0]?.filename || null, ups[0]?.mimetype || null)
   db.prepare('INSERT INTO activity (app_id, kind, body) VALUES (?, ?, ?)').run(r.lastInsertRowid, 'status', 'Application submitted')
   res.json({ ref })
 })
@@ -247,7 +249,11 @@ app.post('/api/admin/applications/:id/notes', (req, res) => {
 })
 
 app.get('/api/admin/files/:id', (req, res) => {
-  const a = db.prepare('SELECT file_path, file_type, file_name FROM applications WHERE id = ?').get(req.params.id)
+  const row = db.prepare('SELECT file_path, file_type, file_name, data FROM applications WHERE id = ?').get(req.params.id)
+  let list = []
+  try { list = JSON.parse(row?.data || '{}').files || [] } catch { /* old row */ }
+  const a = list.length ? list[Number(req.query.i) || 0] : row && { file_path: row.file_path, file_type: row.file_type, file_name: row.file_name }
+  if (a && a.path) { a.file_path = a.path; a.file_type = a.type; a.file_name = a.name }
   const p = a?.file_path && path.join(UPLOAD_DIR, path.basename(a.file_path))
   if (!p || !existsSync(p)) return fail(res, 404, 'No file.')
   res.setHeader('Content-Type', a.file_type)

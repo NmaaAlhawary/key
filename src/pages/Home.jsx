@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import StitchKey from '../components/StitchKey.jsx'
-import PartnerKey from '../components/PartnerKey.jsx'
 import KeyBox from '../components/KeyBox.jsx'
 import Slogan from '../components/Slogan.jsx'
 import Icon from '../components/Icon.jsx'
@@ -14,9 +13,10 @@ import { api } from '../api.js'
 import { countUp } from '../useReveal.js'
 
 const SLIDES = [
-  { img: '/img/stage.jpg', pos: 'center 45%' },
   { img: '/img/petra.jpg', pos: 'center 40%', credit: 'Al-Khazneh, Petra · Photo: Brian Jeffery Beggerly, CC BY 2.0' },
   { img: '/img/amman.jpg', pos: 'center 55%', credit: 'Amman · Photo: Bernard Gagnon, CC BY-SA 4.0' },
+  { img: '/img/key-tag.jpg', pos: 'center 35%' },
+  { img: '/img/stage.jpg', pos: 'center 45%' },
 ]
 
 const JOURNEY = [
@@ -94,13 +94,13 @@ export default function Home() {
           </div>
           <h3 className="subhead">Season one supporters</h3>
           <div className="tiles">
-            {[['Master Key Partner', 'master'], ['Spare Key', 'spare'], ['Locksmith', 'locksmith']].map(([k, ic]) => {
+            {[['Master Key Partner', '/img/key-stitched.jpg', 'center 30%'], ['Spare Key', '/img/key-plain.jpg', 'center 30%'], ['Locksmith', '/img/keys-collection.jpg', 'center 40%']].map(([k, img, pos]) => {
               const signed = partners.filter(x => x.kind === k)
               return signed.length ? signed.map(x => <LogoTile key={x.id} p={x} label={k} light />) : (
-                <Link className="tile ptile light" to="/partners" key={k}><PartnerKey kind={ic} /><b>{k}</b><span>Seat open</span></Link>
+                <Link className="tile ptile photo" to="/partners" key={k}><img src={asset(img)} alt="" loading="lazy" style={{ objectPosition: pos }} /><b>{k}</b><span>Seat open</span></Link>
               )
             })}
-            <Link className="tile ptile red" to="/partners"><PartnerKey kind="lock" color="#fff" /><b>Bring a problem</b><span>Become a partner →</span></Link>
+            <Link className="tile ptile photo cta" to="/partners"><img src={asset('/img/vault-chest.jpg')} alt="" loading="lazy" style={{ objectPosition: 'center 45%' }} /><b>Bring a problem</b><span>Become a partner →</span></Link>
           </div>
         </div>
       </section>
@@ -116,7 +116,7 @@ export default function Home() {
               <article className="jcard" key={j.title}>
                 <div className="jcard-img"><img src={asset(j.img)} alt="" loading="lazy" />{j.credit && <small className="img-credit">{j.credit}</small>}</div>
                 <div className="jcard-body">
-                  <div className="jcard-t"><span className="chip-ic"><Icon name={j.ic} size={30} /></span><span><b>{j.title}</b><small>{j.sub}</small></span></div>
+                  <div className="jcard-t"><b><span className="chip-ic"><Icon name={j.ic} size={24} /></span>{j.title}</b><small>{j.sub}</small></div>
                   <p>{j.text}</p>
                 </div>
               </article>

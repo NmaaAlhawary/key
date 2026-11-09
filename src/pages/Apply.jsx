@@ -7,6 +7,7 @@ import Icon from '../components/Icon.jsx'
 import { asset } from '../asset.js'
 import { CHALLENGES, TRACKS, ROLES, THEMES, ageOn, MIN_AGE, MAX_AGE } from '../shared/rules.js'
 
+const MAX_FILES = 5, MAX_MB = 25
 const DRAFT = 'keys-apply-draft'
 const STEPS = ['About you', 'Interests', 'Show us', 'Challenge', 'Parent', 'Review']
 const STEP_HINTS = ['Name, age, school', 'What you enjoy', 'Something you fixed', 'One tech idea', 'Consent and contact', 'Check and send']
@@ -15,7 +16,7 @@ const HEARD = ['School', 'Instagram', 'Parent group', 'A friend', 'NGO partner',
 const EMPTY = {
   first_name: '', last_name: '', dob: '', gender: '', school: '', grade: '', area: '',
   interests: [], themes: [], self_role: '', experience: '',
-  piece1_text: '', challenge: null, ch_track: '', ch_obvious: '', ch_answer: '', ch_link: '',
+  piece1_text: '', piece1_link: '', challenge: null, ch_track: '', ch_obvious: '', ch_answer: '', ch_link: '',
   parent_name: '', parent_relation: '', parent_email: '', parent_phone: '', heard: '', allergies: '', missed_sessions: '',
   commit_sessions: false, parent_confirms: false, consent_data: false, photo_consent: false, website: '',
 }
@@ -34,7 +35,7 @@ function Field({ label, req, hint, error, children }) {
   )
 }
 
-function validate(step, f, file) {
+function validate(step, f, files) {
   const e = {}
   if (step === 0) {
     if (!f.first_name.trim()) e.first_name = 'Required'
@@ -46,7 +47,8 @@ function validate(step, f, file) {
     if (!f.school.trim()) e.school = 'Required'
   }
   if (step === 1 && !f.themes.length) e.themes = 'Pick at least one'
-  if (step === 2 && !f.piece1_text.trim() && !file) e.piece1 = 'Tell us about it, or add a photo, drawing or voice note'
+  if (step === 2 && !f.piece1_text.trim() && !files.length && !f.piece1_link.trim()) e.piece1 = 'Tell us about it, or add photos, a video or a link'
+  if (step === 2 && f.piece1_link.trim() && !/^https?:\/\//i.test(f.piece1_link.trim())) e.piece1_link = 'Start the link with https://'
   if (step === 3) {
     if (f.challenge == null) e.challenge = 'Pick one problem'
     if (!f.ch_track) e.ch_track = 'Pick one track'
@@ -62,45 +64,10 @@ function validate(step, f, file) {
   return e
 }
 
-function VoiceRecorder({ onDone }) {
-  const [rec, setRec] = useState(null)
-  const [secs, setSecs] = useState(0)
-  const [err, setErr] = useState('')
-  const timer = useRef()
-  async function start() {
-    setErr('')
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      const mr = new MediaRecorder(stream)
-      const parts = []
-      mr.ondataavailable = ev => parts.push(ev.data)
-      mr.onstop = () => {
-        stream.getTracks().forEach(t => t.stop())
-        const type = mr.mimeType || 'audio/webm'
-        const ext = type.includes('mp4') ? 'm4a' : 'webm'
-        onDone(new File(parts, `voice-note.${ext}`, { type }))
-      }
-      mr.start(); setRec(mr); setSecs(0)
-      timer.current = setInterval(() => setSecs(s => { if (s >= 59) { mr.stop(); clearInterval(timer.current); setRec(null) } return s + 1 }), 1000)
-    } catch { setErr('We could not use the microphone. You can upload a file instead.') }
-  }
-  function stop() { rec?.stop(); clearInterval(timer.current); setRec(null) }
-  useEffect(() => () => clearInterval(timer.current), [])
-  if (typeof window !== 'undefined' && !window.MediaRecorder) return null
-  return (
-    <>
-      {rec
-        ? <button type="button" className="btn btn-ink btn-sm" onClick={stop}><span className="rec-dot" /> Stop · 0:{String(secs).padStart(2, '0')} / 1:00</button>
-        : <button type="button" className="btn btn-ghost btn-sm" onClick={start}>🎙 Record a voice note</button>}
-      {err && <div className="err" style={{ width: '100%', color: 'var(--bad)', fontSize: 13 }}>{err}</div>}
-    </>
-  )
-}
-
 export default function Apply() {
   const s = useSettings()
   const [f, setF] = useState(load)
-  const [file, setFile] = useState(null)
+  const [files, setFiles] = useState([])
   const [step, setStep] = useState(0)
   const [errors, setErrors] = useState({})
   const [busy, setBusy] = useState(false)
@@ -114,33 +81,35 @@ export default function Apply() {
   const toggle = (k, v) => set(k, f[k].includes(v) ? f[k].filter(x => x !== v) : [...f[k], v])
   const go = n => { setStep(n); setErrors({}); top.current?.scrollIntoView({ behavior: 'smooth' }) }
   function next() {
-    const e = validate(step, f, file)
+    const e = validate(step, f, files)
     setErrors(e)
     if (!Object.keys(e).length) go(step + 1)
   }
-  function pickFile(ev) {
-    const x = ev.target.files?.[0]
-    if (!x) return
-    if (x.size > 15 * 1024 * 1024) { setErrors({ piece1: 'That file is bigger than 15 MB.' }); return }
-    setFile(x); setErrors({})
+  function pickFiles(ev) {
+    const picked = [...(ev.target.files || [])]
+    ev.target.value = ''
+    if (!picked.length) return
+    const big = picked.find(x => x.size > MAX_MB * 1024 * 1024)
+    if (big) { setErrors({ piece1: `${big.name} is bigger than ${MAX_MB} MB. Put it on YouTube or Google Drive and paste the link instead.` }); return }
+    setFiles(prev => [...prev, ...picked].slice(0, MAX_FILES)); setErrors({})
   }
   async function submit() {
-    for (let i = 0; i < 5; i++) { const e = validate(i, f, file); if (Object.keys(e).length) { setErrors(e); go(i); return } }
+    for (let i = 0; i < 5; i++) { const e = validate(i, f, files); if (Object.keys(e).length) { setErrors(e); go(i); return } }
     setBusy(true); setServerErr('')
     const form = new FormData()
     form.append('payload', JSON.stringify(f))
-    if (file) form.append('piece1File', file)
+    files.forEach(x => form.append('piece1File', x))
     try {
       const r = await api('/api/applications', { method: 'POST', form })
       setDone({ ref: r.ref, name: f.first_name, email: f.parent_email })
       try { localStorage.removeItem(DRAFT) } catch { /* ignore */ }
-      setF(EMPTY); setFile(null)
+      setF(EMPTY); setFiles([])
       top.current?.scrollIntoView({ behavior: 'smooth' })
     } catch (e) { setServerErr(e.message) } finally { setBusy(false) }
   }
 
   const age = ageOn(f.dob)
-  const fileUrl = useMemo(() => file && URL.createObjectURL(file), [file])
+  const fileUrls = useMemo(() => files.map(x => URL.createObjectURL(x)), [files])
 
   return (
     <>
@@ -221,7 +190,7 @@ export default function Apply() {
                 <Field label="In a team, which one sounds most like you?" hint="Roles rotate during the season, so you will try them all.">
                   <div>{ROLES.map(r => (
                     <button type="button" key={r.key} className={`choice ${f.self_role === r.key ? 'on' : ''}`} onClick={() => set('self_role', r.key)}>
-                      <b>{r.short}</b><span><strong>{r.label}</strong><br /><span className="muted">{r.note}</span></span>
+                      <b><Icon name={r.ic} size={20} /></b><span><strong>{r.label}</strong><br /><span className="muted">{r.note}</span></span>
                     </button>
                   ))}</div>
                 </Field>
@@ -230,30 +199,34 @@ export default function Apply() {
 
               {step === 2 && <>
                 <h2 className="form-title">Piece 1 · Show us something</h2>
-                <p className="form-sub">Something you fixed or built: a toy, a bike, a game, a drawing, a recipe, anything. What went wrong, and what did you try?</p>
+                <p className="form-sub">Something you fixed or built: a toy, a bike, a game, a website, a recipe, anything. What went wrong, and what did you try? Show it with photos, a video or a link.</p>
                 <Field label="Tell us about it" error={errors.piece1} hint="A few sentences is enough.">
                   <textarea {...bind('piece1_text')} rows={5} placeholder="I fixed..." />
                 </Field>
-                <div className={`drop ${file ? 'has' : ''}`}>
-                  {file ? (
-                    <div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-                        <span>✓ <b>{file.name}</b> · {(file.size / 1024 / 1024).toFixed(1)} MB</span>
-                        <button type="button" className="btn btn-ghost btn-sm" onClick={() => setFile(null)}>Remove</button>
-                      </div>
-                      {file.type.startsWith('image/') && <img src={fileUrl} alt="Your upload" style={{ maxHeight: 220, marginTop: 14, borderRadius: 8 }} />}
-                      {file.type.startsWith('audio/') && <audio controls src={fileUrl} style={{ width: '100%', marginTop: 14 }} />}
+                <div className={`drop ${files.length ? 'has' : ''}`}>
+                  {!!files.length && (
+                    <div className="drop-files">
+                      {files.map((x, i) => (
+                        <div className="drop-file" key={i}>
+                          {x.type.startsWith('image/') ? <img src={fileUrls[i]} alt="" /> : x.type.startsWith('video/') ? <video src={fileUrls[i]} muted /> : <span className="drop-pdf"><Icon name="pdf" size={22} /></span>}
+                          <span><b>{x.name}</b><small>{(x.size / 1024 / 1024).toFixed(1)} MB</small></span>
+                          <button type="button" className="btn btn-ghost btn-sm" onClick={() => setFiles(files.filter((_, k) => k !== i))}>Remove</button>
+                        </div>
+                      ))}
                     </div>
-                  ) : (
-                    <>
-                      <div>Add a photo, a drawing or a 1-minute voice note <span className="muted">(optional, up to 15 MB)</span></div>
-                      <div className="drop-row">
-                        <label className="btn btn-ink btn-sm">Upload a file<input type="file" accept="image/*,audio/*,video/*,application/pdf" onChange={pickFile} hidden /></label>
-                        <VoiceRecorder onDone={x => { setFile(x); setErrors({}) }} />
-                      </div>
-                    </>
                   )}
+                  {files.length < MAX_FILES && <>
+                    <div>Add photos, a short video or a PDF <span className="muted">(optional, up to {MAX_FILES} files, {MAX_MB} MB each)</span></div>
+                    <div className="drop-row">
+                      <label className="btn btn-ink btn-sm"><Icon name="camera" size={18} /> Photos<input type="file" accept="image/*" multiple onChange={pickFiles} hidden /></label>
+                      <label className="btn btn-ink btn-sm"><Icon name="video" size={18} /> Video<input type="file" accept="video/*" onChange={pickFiles} hidden /></label>
+                      <label className="btn btn-ghost btn-sm">PDF or slides<input type="file" accept="application/pdf" onChange={pickFiles} hidden /></label>
+                    </div>
+                  </>}
                 </div>
+                <Field label="Or paste a link" error={errors.piece1_link} hint="Optional. A YouTube or Google Drive video, a game, a website, a portfolio.">
+                  <input {...bind('piece1_link')} type="url" placeholder="https://" />
+                </Field>
               </>}
 
               {step === 3 && <>
@@ -310,7 +283,7 @@ export default function Apply() {
                     <dt>Sounds like me</dt><dd>{ROLES.find(r => r.key === f.self_role)?.label || '—'}</dd>
                   </dl>
                   <h4>Show us something</h4>
-                  <dl><dt>Story</dt><dd>{f.piece1_text || '—'}</dd><dt>File</dt><dd>{file?.name || '—'}</dd></dl>
+                  <dl><dt>Story</dt><dd>{f.piece1_text || '—'}</dd><dt>Files</dt><dd>{files.map(x => x.name).join(', ') || '—'}</dd><dt>Link</dt><dd>{f.piece1_link || '—'}</dd></dl>
                   <h4>Key Challenge</h4>
                   <dl>
                     <dt>Problem</dt><dd>{f.challenge != null && `${'AB'[f.challenge]}. ${CHALLENGES[f.challenge]}`}</dd>
@@ -334,7 +307,7 @@ export default function Apply() {
                   ? <button className="btn btn-ink arrow" onClick={next}>Next</button>
                   : <button className="btn btn-ink" onClick={submit} disabled={busy}>{busy ? 'Sending…' : 'Send my application'}</button>}
               </div>
-              <p className="label" style={{ marginTop: 16, textAlign: 'center' }}>Your answers are saved on this device until you send them{file ? ' (the file is not, so keep this tab open)' : ''}.</p>
+              <p className="label" style={{ marginTop: 16, textAlign: 'center' }}>Your answers are saved on this device until you send them{files.length ? ' (the files are not, so keep this tab open)' : ''}.</p>
             </>
           )}
         </div>

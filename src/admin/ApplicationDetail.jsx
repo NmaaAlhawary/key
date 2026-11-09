@@ -81,14 +81,18 @@ export default function ApplicationDetail() {
           <div className="ad-card">
             <h3>Piece 1 · Show us something <small className="label">Curiosity</small></h3>
             <div className="qa"><p>{d.piece1_text || <span className="muted">No text.</span>}</p></div>
-            {a.has_file && (
-              <div className="media">
-                {a.file_type?.startsWith('image/') && <a href={fileUrl} target="_blank" rel="noreferrer"><img src={fileUrl} alt="Applicant upload" /></a>}
-                {a.file_type?.startsWith('audio/') && <audio controls src={fileUrl} />}
-                {a.file_type?.startsWith('video/') && <video controls src={fileUrl} />}
-                {a.file_type === 'application/pdf' && <a className="btn btn-ghost btn-sm" style={{ margin: 12 }} href={fileUrl} target="_blank" rel="noreferrer">Open PDF: {a.file_name}</a>}
-              </div>
-            )}
+            {(d.piece1_link) && <p style={{ margin: '10px 0 0' }}><a className="btn btn-ghost btn-sm" href={d.piece1_link} target="_blank" rel="noreferrer">Open link: {d.piece1_link}</a></p>}
+            {a.has_file && (d.files?.length ? d.files : [{ name: a.file_name, type: a.file_type }]).map((x, i) => {
+              const url = `${fileUrl}?i=${i}`
+              return (
+                <div className="media" key={i}>
+                  {x.type?.startsWith('image/') && <a href={url} target="_blank" rel="noreferrer"><img src={url} alt="Applicant upload" /></a>}
+                  {x.type?.startsWith('audio/') && <audio controls src={url} />}
+                  {x.type?.startsWith('video/') && <video controls src={url} />}
+                  {x.type === 'application/pdf' && <a className="btn btn-ghost btn-sm" style={{ margin: 12 }} href={url} target="_blank" rel="noreferrer">Open PDF: {x.name}</a>}
+                </div>
+              )
+            })}
           </div>
 
           <div className="ad-card">

@@ -60,7 +60,7 @@ const DEFAULT_SETTINGS = {
   publish_results: 'false',
   season_label: 'Season one · Amman',
   call_dates: '1 to 14 March 2027',
-  seat_price: '350 JOD',
+  seat_price: '400 JOD',
 }
 for (const [k, v] of Object.entries(DEFAULT_SETTINGS)) {
   db.prepare('INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)').run(k, v)

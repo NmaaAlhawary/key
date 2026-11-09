@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero.jsx'
 import Icon from '../components/Icon.jsx'
+import KeyBox from '../components/KeyBox.jsx'
 import { CHALLENGES, TRACKS } from '../shared/rules.js'
 import { PICK } from '../content.js'
 import { useSettings } from '../useSettings.js'
 
 export default function Application() {
   const s = useSettings()
+  const m = s.call_dates.match(/^(\d+) to (\d+) (\w+)/)
+  const days = m ? `${m[1]}–${m[2]}` : s.call_dates, month = m?.[3]
   return (
     <>
       <PageHero img="/img/amman.jpg" credit="Roman Theatre, Amman · Photo: Bernard Gagnon, CC BY-SA 4.0" title={<>Join the KEYS<br />season</>} text="Ready to crack a real problem from a real company? Here is everything you need to know before applying."
@@ -36,12 +39,12 @@ export default function Application() {
           <p className="lead">A 15-minute form, filled in with a parent. The basics, your interests, and two short pieces.</p>
           <div className="gcards">
             <div className="gcard">
-              <h3><span className="chip-ic"><Icon name="mic" size={34} /></span>Piece 1 · Show us something</h3>
-              <p>Something you fixed or built: a toy, a bike, a game, a recipe. Pick one way to show it.</p>
+              <h3><span className="chip-ic"><Icon name="camera" size={34} /></span>Piece 1 · Show us something</h3>
+              <p>Something you fixed or built: a toy, a bike, a game, a recipe. Show it any way you like.</p>
               <div className="opts">
-                <div className="opt"><Icon name="camera" size={34} /><b>A photo</b><span>Upload from your phone</span></div>
-                <div className="opt"><Icon name="pencil" size={34} /><b>A drawing</b><span>Snap it on paper</span></div>
-                <div className="opt"><Icon name="wave" size={34} /><b>A voice note</b><span>1 minute, in the form</span></div>
+                <div className="opt"><Icon name="camera" size={34} /><b>Photos</b><span>Up to 5, from your phone</span></div>
+                <div className="opt"><Icon name="video" size={34} /><b>A video</b><span>A short clip, 1 to 2 minutes</span></div>
+                <div className="opt"><Icon name="link" size={34} /><b>A link or file</b><span>YouTube, Drive, a game, a PDF</span></div>
               </div>
               <div className="tell">
                 <div><Icon name="idea" size={22} />What went wrong?</div>
@@ -70,18 +73,30 @@ export default function Application() {
       </section>
 
       <section className="sec">
-        <div className="wrap" style={{ display: 'grid', gap: 24 }}>
-          <div className="ctabox" style={{ textAlign: 'left', maxWidth: 760 }}>
-            <h2 style={{ fontSize: 20 }}>Online application</h2>
-            <p>Applications are open from <b className="hi">{s.call_dates}</b>. Fill in the form with a parent and be yourself: an honest answer beats a polished one.</p>
-            <p>After the call closes, about 40 shortlisted students are invited to the Key Trial, a fun 90-minute group challenge. Then 20 are picked into four teams of five.</p>
-            <p style={{ margin: 0 }}>Everyone hears back within 7 days of the Key Trial. The waiting list gets priority next season.</p>
-          </div>
-          <div className="ctabox">
-            <h2>Ready to join?</h2>
-            <p>Take the first step toward the Vault.</p>
-            <small>{s.apps_open ? `Applications ${s.call_dates}` : `Applications open ${s.call_dates}`}</small>
-            <Link to="/apply" className="btn btn-red arrow">{s.apps_open ? 'Start my application' : 'Get notified'}</Link>
+        <div className="wrap">
+          <div className="label red">After you press send</div>
+          <h2 className="h2" style={{ margin: '8px 0 10px' }}>From form to team</h2>
+          <p className="lead" style={{ margin: 0 }}>Fill in the form with a parent and be yourself: an honest answer beats a polished one.</p>
+          <ol className="apath">
+            <li><span className="apath-n">{days}</span><b>Apply online</b><small>{month ? `${month}: a` : 'A'} 15-minute form, together with a parent</small></li>
+            <li><span className="apath-n">40</span><b>Invited to the Key Trial</b><small>A fun 90-minute group challenge</small></li>
+            <li><span className="apath-n">20</span><b>Picked</b><small>Four teams of five, from different schools</small></li>
+            <li><span className="apath-n">7 days</span><b>Everyone hears back</b><small>The waiting list gets priority next season</small></li>
+          </ol>
+
+          <div className="ctabox ctasplit" style={{ marginTop: 56 }}>
+            <div className="ctasplit-text">
+              <div className="label red">{s.apps_open ? `Applications ${s.call_dates}` : `Applications open ${s.call_dates}`}</div>
+              <h2>Ready to join?</h2>
+              <p>Take the first step toward the Vault. Applying is free, no grades asked.</p>
+              <ul className="ctasplit-steps">
+                <li><b>1</b>Tell us about you and what you like</li>
+                <li><b>2</b>Show us something you fixed or built</li>
+                <li><b>3</b>Answer the Key Challenge in your own way</li>
+              </ul>
+              <Link to="/apply" className="btn btn-red arrow">{s.apps_open ? 'Start my application' : 'Get notified'}</Link>
+            </div>
+            <KeyBox />
           </div>
         </div>
       </section>

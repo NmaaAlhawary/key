@@ -13,7 +13,7 @@ export default function HowItWorks() {
   const s = useSettings()
   return (
     <>
-      <PageHero img="/img/keys.jpg" title={<>How KEYS<br />works</>} />
+      <PageHero img="/img/key-tag.jpg" title="How KEYS works" />
       <section className="sec">
         <div className="wrap">
           <div className="split">
@@ -40,7 +40,7 @@ export default function HowItWorks() {
                 : r.art === 'keys' ? (
                   <div className="art-keys">{[1, 2, 3, 4, 5, 6].map(n => <div key={n}><span>0{n}</span><StitchKey teeth={n} size={170} dim="rgba(255,255,255,.1)" className="on-dark" /></div>)}</div>
                 ) : r.art === 'roles' ? (
-                  <div className="art-roles">{ROLES.map(x => <div key={x.key}><span className="art-av">{x.short}</span><b>{x.label}</b></div>)}</div>
+                  <div className="art-roles">{ROLES.map(x => <div key={x.key}><span className="art-av"><Icon name={x.ic} size={30} /></span><b>{x.label}</b></div>)}</div>
                 ) : <span className="art-ring"><Icon name={r.icon} size={84} color="#fff" /></span>}
             </div>
             <div>

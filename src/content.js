@@ -11,9 +11,9 @@ export const NUMBERS = [
 ]
 
 export const JOURNEY = [
-  { when: 'Week 0', title: 'The locked box', text: 'Your team meets its company. It hands you a sealed box: inside, a real problem on a card and a photo of the place.', img: '/img/slate.jpg' },
+  { when: 'Week 0', title: 'The locked box', text: 'Your team meets its company. It hands you a sealed box: inside, a real problem on a card and a photo of the place.', img: '/img/vault-chest.jpg' },
   { when: 'Week 1', title: 'The Door Visit', text: 'A supervised two-hour visit to the company. Interview the people who feel the problem, then map it.', img: '/img/hands.jpg' },
-  { when: 'Weeks 1 to 7', title: 'Six keys', text: 'Train twice a week in robotics, AI and business. Pass each stage\'s challenge and earn its key.', img: '/img/keys.jpg' },
+  { when: 'Weeks 1 to 7', title: 'Six keys', text: 'Train twice a week in robotics, AI and business. Pass each stage\'s challenge and earn its key.', img: '/img/keys-box-open.jpg' },
   { when: 'Week 8', title: 'The Vault', text: 'Pitch your working prototype to the people who hold the keys. Three keys open the vault on stage.', img: '/img/stage.jpg' },
 ]
 
@@ -205,7 +205,7 @@ export const GOOD_PROBLEM = [
 
 export const FAQ = [
   ['Who can apply?', 'Students aged 13 to 16 on 1 April 2027, from any school in Amman. No experience and no grades needed.'],
-  ['How much does it cost?', 'Applying is free. A season seat is 350 JOD, with 10% off for early bird and siblings. Scholarship seats, funded by partners, are there for students who cannot pay, so cost never decides who gets in.'],
+  ['How much does it cost?', 'Applying is free. A season seat is 400 JOD, with 10% off for early bird and siblings. Scholarship seats, funded by partners, are there for students who cannot pay, so cost never decides who gets in.'],
   ['What does the application ask for?', 'A 15-minute form: the basics, your interests, and two pieces. Show us something you fixed, built or made, then the Key Challenge: pick one of two open problems and answer it in the track that fits you best (research, design, tech, money or story). No coding needed.'],
   ['How are students picked?', 'Two staff read every application and score it separately. About 40 students are invited to the Key Trial, a fun 90-minute group challenge. Then 20 are picked into four teams of five. Everyone hears back within 7 days.'],
   ['Can I join with my friends?', 'Teams are built on purpose with students from different schools. Friends are split up. That is how a coder learns to pitch and a talker learns to build.'],
@@ -220,7 +220,7 @@ export const HOW_ROWS = [
   { when: '1 to 14 March 2027', title: 'Online application', img: '/img/hands.jpg', text: ['Fill in a 15-minute form with a parent. Be yourself: an honest answer beats a polished one.', 'Two of our team read every application and score it separately.'] , list: ['The basics and your interests', 'Piece 1: show us something you fixed or built', 'Piece 2: the Key Challenge, in one of five tracks'] },
   { when: '15 to 21 March 2027', title: 'The Key Trial', icon: 'people', text: ['About 40 shortlisted students join a fun 90-minute group challenge, in groups of 10 who have never met. Fun, not an exam.'], list: ['Welcome and a name game', 'Tower challenge: the tallest tower that holds a phone, from 20 straws, tape and string', 'Mini problem: "The canteen line is too long. Sketch one fix."', 'Reflection, then goodbye. Feedback is always kind.'] },
   { when: '22 to 28 March 2027', title: 'Teams of five', art: 'roles', text: ['20 students are picked into four teams of five. Everyone hears back within 7 days, and the waiting list gets priority next season.'], list: ['All five roles in every team', 'No two students from the same school', 'At least 2 girls and 2 boys', 'Younger and older together'] },
-  { when: 'Early April 2027', title: 'Team day and the locked box', img: '/img/slate.jpg', text: ['Meet your team, swap skills, and pick a team name, flag and three rules.', 'Then your Lock Partner hands you a sealed box. Inside: the real problem on a card and a photo of the place. Open it, read it, and plan your Door Visit.'] },
+  { when: 'Early April 2027', title: 'Team day and the locked box', img: '/img/vault-chest.jpg', text: ['Meet your team, swap skills, and pick a team name, flag and three rules.', 'Then your Lock Partner hands you a sealed box. Inside: the real problem on a card and a photo of the place. Open it, read it, and plan your Door Visit.'] },
   { when: 'April to May 2027', title: 'Six keys', art: 'keys', text: ['Two sessions a week after school, about two and a half hours each. Every stage ends with a short challenge. Pass it, and your team earns that stage\'s key.'], list: ['Discovery, Build, Code and AI', 'Money, Check, Pitch', 'Miss a key? One catch-up session. Nobody is dropped.'] },
   { when: 'Late May 2027', title: 'Vault night', img: '/img/stage.jpg', text: ['Pitch your working prototype to the leaders who hold the keys, in front of families, schools and media. Three keys open the vault on stage.'] },
   { when: 'After the Vault', title: 'Beyond KEYS', icon: 'spark', text: ['Your keys go on a ring and the Key Wall. Tap one on a phone to open your team\'s project page: proof for school and university applications.'] },

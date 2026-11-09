@@ -2,7 +2,7 @@
 import {
   Package, Door, Key, Vault, UserCircle, Coins, MapPin, Sparkle, ShieldCheck, UsersThree, Wrench,
   Microphone, Clock, ChatsCircle, Camera, PencilSimple, Waveform, Lightbulb, Cpu, MagnifyingGlass,
-  Handshake, PresentationChart, CheckCircle, Robot, Trophy, DeviceMobile, Truck, ForkKnife, Bank, HandHeart, Toolbox, Sun, Moon,
+  Handshake, PresentationChart, CheckCircle, Robot, Trophy, DeviceMobile, Truck, ForkKnife, Bank, HandHeart, Toolbox, Sun, Moon, Flag, Code, Hammer, VideoCamera, LinkSimple, FilePdf,
 } from '@phosphor-icons/react'
 
 const MAP = {
@@ -10,7 +10,7 @@ const MAP = {
   shield: ShieldCheck, people: UsersThree, tool: Wrench, mic: Microphone, clock: Clock, chat: ChatsCircle,
   camera: Camera, pencil: PencilSimple, wave: Waveform, idea: Lightbulb, cpu: Cpu, search: MagnifyingGlass,
   hand: Handshake, pitch: PresentationChart, check: CheckCircle, robot: Robot, trophy: Trophy,
-  sun: Sun, moon: Moon, phone: DeviceMobile, truck: Truck, food: ForkKnife, bank: Bank, heart: HandHeart, toolbox: Toolbox,
+  sun: Sun, moon: Moon, phone: DeviceMobile, truck: Truck, food: ForkKnife, bank: Bank, heart: HandHeart, toolbox: Toolbox, flag: Flag, code: Code, hammer: Hammer, video: VideoCamera, link: LinkSimple, pdf: FilePdf,
 }
 
 export default function Icon({ name, size = 28, color = 'currentColor', weight = 'duotone' }) {
