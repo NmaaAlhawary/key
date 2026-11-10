@@ -108,8 +108,8 @@ export default function Home() {
       <section className="sec journey-sec">
         <div className="wrap">
           <div className="label red">02 · The journey</div>
-          <h2 className="h2">One key, six teeth.</h2>
-          <p className="lead" style={{ margin: '10px 0 0' }}>Every stage your team passes cuts one more tooth. Six teeth, and the key fits the Vault.</p>
+          <h2 className="h2">Six stages. Six keys.</h2>
+          <p className="lead" style={{ margin: '10px 0 0' }}>Every stage ends with one challenge. Pass it and your team collects that stage's key, and one more tooth is cut on your blade. Collect all six and your key fits the Vault.</p>
           <KeyBlade />
           <div className="jgrid">
             {JOURNEY.map((j, k) => (
